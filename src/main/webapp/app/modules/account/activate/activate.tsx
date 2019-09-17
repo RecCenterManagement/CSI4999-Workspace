@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Row, Col, Alert } from 'reactstrap';
+import { Row, Col, Alert, Button } from 'reactstrap';
 import { Translate, getUrlParameter } from 'react-jhipster';
 
 import { IRootState } from 'app/shared/reducers';
@@ -9,11 +9,9 @@ import { activateAction, reset } from './activate.reducer';
 
 const successAlert = (
   <Alert color="success">
-    <Translate contentKey="activate.messages.success">
-      <strong>Your user account has been activated.</strong> Please
-    </Translate>
-    <Link to="/login" className="alert-link">
-      <Translate contentKey="global.messages.info.authenticated.link">sign in</Translate>
+      Your user account has been activated successfully.{' '}
+      <Link to="/login" className="alert-link">
+       Please sign in
     </Link>
     .
   </Alert>
@@ -21,9 +19,12 @@ const successAlert = (
 
 const failureAlert = (
   <Alert color="danger">
-    <Translate contentKey="activate.messages.error">
-      <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
-    </Translate>
+      <strong>Your account could not be activated!</strong> Please use the registration form again to {' '}
+      <Link to="/register" className="alert-link">
+      sign up {' '}</link>
+      or go to the {' '}
+      <Link to="">home {' '}</link>
+      page.
   </Alert>
 );
 
@@ -43,12 +44,13 @@ export const ActivatePage = (props: IActivateProps) => {
       <Row className="justify-content-center">
         <Col md="8">
           <h1>
-            <Translate contentKey="activate.title">Activation</Translate>
+            <center>Account Activation</center>
           </h1>
-          {props.activationSuccess ? successAlert : undefined}
+          {props.activationSuccess ? successAlert : undefined}  {/*change props.activationSuccess and props.activationFailure to true and false*/}
           {props.activationFailure ? failureAlert : undefined}
         </Col>
       </Row>
+      <br /><br /><br />
     </div>
   );
 };
