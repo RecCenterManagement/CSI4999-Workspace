@@ -20,10 +20,16 @@ class LoginModal extends React.Component<ILoginModalProps> {
   render() {
     const { loginError, handleClose } = this.props;
 
+    // Modal takes a component as an optional param
+    const closeButton = (
+      <Button tag={Link} to="/" onClick={() => handleClose}>
+        &times;
+      </Button>
+    );
     return (
       <Modal isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
         <AvForm onSubmit={this.handleSubmit}>
-          <ModalHeader id="login-title" toggle={handleClose}>
+          <ModalHeader id="login-title" toggle={handleClose} close={closeButton}>
             <Translate contentKey="login.title">Sign in</Translate>
           </ModalHeader>
           <ModalBody>
@@ -77,7 +83,7 @@ class LoginModal extends React.Component<ILoginModalProps> {
             </Alert>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={handleClose} tabIndex="1">
+            <Button tag={Link} to="/" color="secondary" onClick={handleClose} tabIndex="1">
               <Translate contentKey="entity.action.cancel">Cancel</Translate>
             </Button>{' '}
             <Button color="primary" type="submit">
