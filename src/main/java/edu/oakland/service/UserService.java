@@ -3,8 +3,10 @@ package edu.oakland.service;
 import edu.oakland.config.Constants;
 import edu.oakland.domain.Authority;
 import edu.oakland.domain.User;
+import edu.oakland.domain.ExtendedUser;
 import edu.oakland.repository.AuthorityRepository;
 import edu.oakland.repository.UserRepository;
+import edu.oakland.repository.ExtendedUserRepository;
 import edu.oakland.security.AuthoritiesConstants;
 import edu.oakland.security.SecurityUtils;
 import edu.oakland.service.dto.UserDTO;
@@ -37,14 +39,19 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final ExtendedUserRepository extendedUserRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, ExtendedUserRepository extendedUserRepository,
+                       PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository,
+                       CacheManager cacheManager) {
         this.userRepository = userRepository;
+        this.extendedUserRepository = extendedUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
@@ -114,12 +121,21 @@ public class UserService {
         newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
+        // new user gets default authority
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        // new user gets default ExtendedUser
+        ExtendedUser newExtendedUser = new ExtendedUser();
+        newExtendedUser.setBadActor(false);
+        newExtendedUser.setUser(newUser);
+
+        extendedUserRepository.save(newExtendedUser);
         userRepository.save(newUser);
+        
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+        log.debug("Created extended Information for User: {}", newExtendedUser);
         return newUser;
     }
 
