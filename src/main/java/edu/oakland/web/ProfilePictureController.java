@@ -1,4 +1,4 @@
-package edu.oakland.web.rest;
+package edu.oakland.web;
 
 import java.util.Optional;
 
