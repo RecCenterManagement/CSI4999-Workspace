@@ -130,8 +130,8 @@ public class UserService {
         newExtendedUser.setBadActor(false);
         newExtendedUser.setUser(newUser);
 
-        extendedUserRepository.save(newExtendedUser);
         userRepository.save(newUser);
+        extendedUserRepository.save(newExtendedUser);
         
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);

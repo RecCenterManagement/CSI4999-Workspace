@@ -24,7 +24,7 @@ public class ExtendedUser implements Serializable {
     @Column(name = "bad_actor")
     private Boolean badActor;
 
-    @OneToOne(cascade = CascadeType.DELETE)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(unique = true)
     private User user;
 

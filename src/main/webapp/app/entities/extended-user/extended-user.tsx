@@ -57,7 +57,7 @@ export class ExtendedUser extends React.Component<IExtendedUserProps> {
                       </Button>
                     </td>
                     <td>{extendedUser.badActor ? 'true' : 'false'}</td>
-                    <td>{extendedUser.user ? extendedUser.user.login : ''}</td>
+                    <td>{extendedUser.userLogin ? extendedUser.userLogin : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${extendedUser.id}`} color="info" size="sm">

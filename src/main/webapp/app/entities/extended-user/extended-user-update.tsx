@@ -105,7 +105,7 @@ export class ExtendedUserUpdate extends React.Component<IExtendedUserUpdateProps
                   <Label for="extended-user-user">
                     <Translate contentKey="recCenterManagementApp.extendedUser.user">User</Translate>
                   </Label>
-                  <AvInput id="extended-user-user" type="select" className="form-control" name="user.id">
+                  <AvInput id="extended-user-user" type="select" className="form-control" name="userId">
                     <option value="" key="0" />
                     {users
                       ? users.map(otherEntity => (

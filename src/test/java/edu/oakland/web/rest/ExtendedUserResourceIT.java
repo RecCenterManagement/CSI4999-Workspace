@@ -3,6 +3,9 @@ package edu.oakland.web.rest;
 import edu.oakland.RecCenterManagementApp;
 import edu.oakland.domain.ExtendedUser;
 import edu.oakland.repository.ExtendedUserRepository;
+import edu.oakland.service.ExtendedUserService;
+import edu.oakland.service.dto.ExtendedUserDTO;
+import edu.oakland.service.mapper.ExtendedUserMapper;
 import edu.oakland.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +43,12 @@ public class ExtendedUserResourceIT {
     private ExtendedUserRepository extendedUserRepository;
 
     @Autowired
+    private ExtendedUserMapper extendedUserMapper;
+
+    @Autowired
+    private ExtendedUserService extendedUserService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -61,7 +70,7 @@ public class ExtendedUserResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ExtendedUserResource extendedUserResource = new ExtendedUserResource(extendedUserRepository);
+        final ExtendedUserResource extendedUserResource = new ExtendedUserResource(extendedUserService);
         this.restExtendedUserMockMvc = MockMvcBuilders.standaloneSetup(extendedUserResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -104,9 +113,10 @@ public class ExtendedUserResourceIT {
         int databaseSizeBeforeCreate = extendedUserRepository.findAll().size();
 
         // Create the ExtendedUser
+        ExtendedUserDTO extendedUserDTO = extendedUserMapper.toDto(extendedUser);
         restExtendedUserMockMvc.perform(post("/api/extended-users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(extendedUser)))
+            .content(TestUtil.convertObjectToJsonBytes(extendedUserDTO)))
             .andExpect(status().isCreated());
 
         // Validate the ExtendedUser in the database
@@ -123,11 +133,12 @@ public class ExtendedUserResourceIT {
 
         // Create the ExtendedUser with an existing ID
         extendedUser.setId(1L);
+        ExtendedUserDTO extendedUserDTO = extendedUserMapper.toDto(extendedUser);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restExtendedUserMockMvc.perform(post("/api/extended-users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(extendedUser)))
+            .content(TestUtil.convertObjectToJsonBytes(extendedUserDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ExtendedUser in the database
@@ -186,10 +197,11 @@ public class ExtendedUserResourceIT {
         em.detach(updatedExtendedUser);
         updatedExtendedUser
             .badActor(UPDATED_BAD_ACTOR);
+        ExtendedUserDTO extendedUserDTO = extendedUserMapper.toDto(updatedExtendedUser);
 
         restExtendedUserMockMvc.perform(put("/api/extended-users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedExtendedUser)))
+            .content(TestUtil.convertObjectToJsonBytes(extendedUserDTO)))
             .andExpect(status().isOk());
 
         // Validate the ExtendedUser in the database
@@ -205,11 +217,12 @@ public class ExtendedUserResourceIT {
         int databaseSizeBeforeUpdate = extendedUserRepository.findAll().size();
 
         // Create the ExtendedUser
+        ExtendedUserDTO extendedUserDTO = extendedUserMapper.toDto(extendedUser);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restExtendedUserMockMvc.perform(put("/api/extended-users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(extendedUser)))
+            .content(TestUtil.convertObjectToJsonBytes(extendedUserDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ExtendedUser in the database
@@ -248,5 +261,28 @@ public class ExtendedUserResourceIT {
         assertThat(extendedUser1).isNotEqualTo(extendedUser2);
         extendedUser1.setId(null);
         assertThat(extendedUser1).isNotEqualTo(extendedUser2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(ExtendedUserDTO.class);
+        ExtendedUserDTO extendedUserDTO1 = new ExtendedUserDTO();
+        extendedUserDTO1.setId(1L);
+        ExtendedUserDTO extendedUserDTO2 = new ExtendedUserDTO();
+        assertThat(extendedUserDTO1).isNotEqualTo(extendedUserDTO2);
+        extendedUserDTO2.setId(extendedUserDTO1.getId());
+        assertThat(extendedUserDTO1).isEqualTo(extendedUserDTO2);
+        extendedUserDTO2.setId(2L);
+        assertThat(extendedUserDTO1).isNotEqualTo(extendedUserDTO2);
+        extendedUserDTO1.setId(null);
+        assertThat(extendedUserDTO1).isNotEqualTo(extendedUserDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(extendedUserMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(extendedUserMapper.fromId(null)).isNull();
     }
 }

@@ -38,7 +38,7 @@ export class ExtendedUserDetail extends React.Component<IExtendedUserDetailProps
             <dt>
               <Translate contentKey="recCenterManagementApp.extendedUser.user">User</Translate>
             </dt>
-            <dd>{extendedUserEntity.user ? extendedUserEntity.user.login : ''}</dd>
+            <dd>{extendedUserEntity.userLogin ? extendedUserEntity.userLogin : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/extended-user" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

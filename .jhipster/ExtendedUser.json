@@ -19,9 +19,9 @@
         }
     ],
     "changelogDate": "20190917143505",
-    "dto": "no",
+    "dto": "mapstruct",
     "searchEngine": false,
-    "service": "no",
+    "service": "serviceImpl",
     "entityTableName": "extended_user",
     "databaseType": "sql",
     "jpaMetamodelFiltering": false,
