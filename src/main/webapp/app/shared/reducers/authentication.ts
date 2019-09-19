@@ -7,6 +7,7 @@ import { setLocale } from 'app/shared/reducers/locale';
 export const ACTION_TYPES = {
   LOGIN: 'authentication/LOGIN',
   GET_SESSION: 'authentication/GET_SESSION',
+  GET_EXTENDED_USER: 'authentication/GET_EXTENDED_USER',
   LOGOUT: 'authentication/LOGOUT',
   CLEAR_AUTH: 'authentication/CLEAR_AUTH',
   ERROR_MESSAGE: 'authentication/ERROR_MESSAGE'
@@ -25,7 +26,11 @@ const initialState = {
   redirectMessage: null as string,
   sessionHasBeenFetched: false,
   idToken: null as string,
-  logoutUrl: null as string
+  logoutUrl: null as string,
+  // Extended user
+  extendedUser: {} as any,
+  extendedUserSuccess: false,
+  extendedUserError: false
 };
 
 export type AuthenticationState = Readonly<typeof initialState>;
@@ -35,6 +40,7 @@ export type AuthenticationState = Readonly<typeof initialState>;
 export default (state: AuthenticationState = initialState, action): AuthenticationState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.LOGIN):
+    case REQUEST(ACTION_TYPES.GET_EXTENDED_USER):
     case REQUEST(ACTION_TYPES.GET_SESSION):
       return {
         ...state,
@@ -56,6 +62,12 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         showModalLogin: true,
         errorMessage: action.payload
       };
+    case FAILURE(ACTION_TYPES.GET_EXTENDED_USER):
+      return {
+        ...state,
+        extendedUserError: true,
+        errorMessage: action.payload
+      };
     case SUCCESS(ACTION_TYPES.LOGIN):
       return {
         ...state,
@@ -63,6 +75,11 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         loginError: false,
         showModalLogin: false,
         loginSuccess: true
+      };
+    case SUCCESS(ACTION_TYPES.GET_EXTENDED_USER):
+      return {
+        ...state,
+        extendedUser: action.payload.data
       };
     case ACTION_TYPES.LOGOUT:
       return {
@@ -106,6 +123,15 @@ export const getSession = () => async (dispatch, getState) => {
   });
 
   const { account } = getState().authentication;
+
+  // Fetch the extended user.
+  if (account) {
+    await dispatch({
+      type: ACTION_TYPES.GET_EXTENDED_USER,
+      payload: axios.get('api/extended-user')
+    });
+  }
+
   if (account && account.langKey) {
     const langKey = Storage.session.get('locale', account.langKey);
     await dispatch(setLocale(langKey));

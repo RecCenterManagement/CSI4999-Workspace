@@ -11,7 +11,7 @@ import { IRootState } from 'app/shared/reducers';
 export type IHomeProp = StateProps;
 
 export const Home = (props: IHomeProp) => {
-  const { account } = props;
+  const { account, extendedUser } = props;
 
   return (
     <Row>
@@ -28,6 +28,8 @@ export const Home = (props: IHomeProp) => {
               <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
                 You are logged in as user {account.login}.
               </Translate>
+              <br/>
+              {!extendedUser.badActor ? 'Good user! :)' : 'Bad user. :('}
             </Alert>
           </div>
         ) : (
@@ -101,6 +103,7 @@ export const Home = (props: IHomeProp) => {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
+  extendedUser: storeState.authentication.extendedUser,
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
