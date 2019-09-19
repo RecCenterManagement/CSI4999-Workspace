@@ -1,0 +1,11 @@
+id;image_data;image_data_content_type;user_id
+1;../fake-data/blob/hipster.png;image/png;1
+2;../fake-data/blob/hipster.png;image/png;2
+3;../fake-data/blob/hipster.png;image/png;2
+4;../fake-data/blob/hipster.png;image/png;1
+5;../fake-data/blob/hipster.png;image/png;2
+6;../fake-data/blob/hipster.png;image/png;2
+7;../fake-data/blob/hipster.png;image/png;2
+8;../fake-data/blob/hipster.png;image/png;2
+9;../fake-data/blob/hipster.png;image/png;1
+10;../fake-data/blob/hipster.png;image/png;1
