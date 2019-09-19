@@ -8,6 +8,7 @@
       "entities": {
         "main": "Entities",
         "extendedUser": "Extended User",
+        "profilePicture": "Profile Picture",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
