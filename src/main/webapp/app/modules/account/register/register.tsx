@@ -50,7 +50,7 @@ export const RegisterPage = (props: IRegisterProps) => {
           <Col md="8">
             <AvForm id="register-form" onValidSubmit={handleValidSubmit}>
               <AvField
-                name="uscolorername"
+                name="username"
                 label={translate('global.form.username.label')}
                 placeholder={translate('global.form.username.placeholder')}
                 validate={{
