@@ -21,7 +21,7 @@ const failureAlert = (
   <Alert color="danger">
       <strong>Your account could not be activated!</strong> Please use the registration form again to {' '}
       <Link to="/register" className="alert-link">
-      sign up {' '}</Linkink>
+      sign up {' '}</Link>
       or go to the {' '}
       <Link to="">home {' '}</Link>
       page.
@@ -44,7 +44,7 @@ export const ActivatePage = (props: IActivateProps) => {
       <Row className="justify-content-center">
         <Col md="8">
           <h1>
-            <center>Account Activation</center>
+            <a>Account Activation</a>
           </h1>
           {props.activationSuccess ? successAlert : undefined}  /*change props.activationSuccess and props.activationFailure to true and false*/
           {props.activationFailure ? failureAlert : undefined}
