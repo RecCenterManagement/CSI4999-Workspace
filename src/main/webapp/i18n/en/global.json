@@ -8,6 +8,8 @@
       "entities": {
         "main": "Entities",
         "profilePicture": "Profile Picture",
+        "facility": "Facility",
+        "reservation": "Reservation",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
