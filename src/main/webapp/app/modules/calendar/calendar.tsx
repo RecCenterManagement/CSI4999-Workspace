@@ -1,6 +1,6 @@
 import './calendar.scss';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
@@ -10,12 +10,18 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
+import { getEntities } from '../../entities/reservation/reservation.reducer';
+import { IReservation } from 'app/shared/model/reservation.model';
 import { IRootState } from 'app/shared/reducers';
+import { convertDateTimeToServer } from 'app/shared/util/date-utils';
 
-export type IHomeProp = StateProps;
+export type ICalendarStateProp = StateProps;
 
-export const CalendarView = (props: IHomeProp) => {
-  const { account } = props;
+export const CalendarView = (props: ICalendarStateProp) => {
+  // Run on page load.
+  useEffect(() => {
+    props.getEntities();
+  }, []);
 
   // English calendar localization.
   const localizer = momentLocalizer(moment);
@@ -136,23 +142,33 @@ export const CalendarView = (props: IHomeProp) => {
   ];
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '45vw' }}>
       <Calendar
         localizer={localizer}
-        events={defaultEvents}
+        events={props.reservationList.map(reservation => {
+          console.log(typeof reservation.startTime);
+          return {
+            id: reservation.id,
+            allDay: false,
+            title: reservation.event,
+            start: convertDateTimeToServer(reservation.startTime),
+            end: convertDateTimeToServer(reservation.endTime),
+            desc: `${reservation.estimatedParticipants} participants`
+          };
+        })}
         views={['week', 'month']}
         startAccessor="start"
         endAccessor="end"
         showMultiDayTimes
-        defaultDate={new Date(2015, 3, 1)}
+        defaultDate={new Date()}
       />
     </div>
   );
 };
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
+const mapStateToProps = ({ reservation }: IRootState) => ({
+  reservationList: reservation.entities,
+  getEntities
 });
 
 type StateProps = ReturnType<typeof mapStateToProps>;
