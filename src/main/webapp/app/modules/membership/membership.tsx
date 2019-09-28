@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer } from 'mdbreact';
 
 const Membership = props => (
       <div>
+      <MDBContainer>
           <MDBTable>
             <MDBTableHead>
               <tr>
@@ -15,11 +16,11 @@ const Membership = props => (
             <MDBTableBody>
               <tr>
                 <td>OU Students</td>
-                <td>Rec Center membership is included in
+                <td className="text-nowrap bd-highlight" style={{width: "8rem"}}>Rec Center membership is included in
                   tuition for students enrolled in the current
                   semester.</td>
-                <td>Placeholder</td>
-                <td>Placeholder</td>
+                <td />
+                <td />
               </tr>
               <tr>
                 <td>Students* (enrolled at other colleges or universities)</td>
@@ -136,6 +137,7 @@ const Membership = props => (
           account.
           <br />
           <br />
+          </MDBContainer>
        </div>
 );
 
