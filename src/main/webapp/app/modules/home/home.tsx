@@ -15,23 +15,20 @@ export const Home = (props: IHomeProp) => {
   const { account } = props;
 
   return (
-    <Container>
-      <Col md="5">
-        <div style={{ height: '600px' }}>
-          <div style={{ position: 'absolute', height: '100%', width: '50%', top: '10%' }}>
-            <Button style={{ background: '#b59a57', height: '25%' }} block>
-              Membership
-            </Button>{' '}
-            <Button style={{ background: '#b59a57', height: '25%' }} block>
-              Checkout Equipment
-            </Button>{' '}
-            <Button style={{ background: '#b59a57', height: '25%' }} block>
-              Checkout Rooms
-            </Button>{' '}
-          </div>
-        </div>
-      </Col>
-    </Container>
+    <Row className="backgroundHome" style={{ height: '80vh' }}>
+      <div className="buttonDiv">
+        <Button className="homeButton" block>
+          Membership
+        </Button>
+        <Button className="homeButton" block>
+          Checkout Equipment
+        </Button>
+        <Button className="homeButton" block>
+          Checkout Rooms
+        </Button>
+      </div>
+      <span className="title"> UNIVERSITY RECREATION AND WELL-BEING </span>
+    </Row>
   );
 };
 
