@@ -21,10 +21,10 @@ export const Home = (props: IHomeProp) => {
           Membership
         </Button>
         <Button className="homeButton" block>
-          Checkout Equipment
+          Room Reservation
         </Button>
         <Button className="homeButton" block>
-          Checkout Rooms
+          Equipment Rental
         </Button>
       </div>
       <span className="title"> UNIVERSITY RECREATION AND WELL-BEING </span>
