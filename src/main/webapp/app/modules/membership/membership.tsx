@@ -4,6 +4,7 @@ import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer } from 'mdbreact';
 const Membership = props => (
       <div>
       <MDBContainer>
+          <a><b>Membership Rates and Information</b></a><br />
           <MDBTable>
             <MDBTableHead>
               <tr>
@@ -16,14 +17,14 @@ const Membership = props => (
             <MDBTableBody>
               <tr>
                 <td>OU Students</td>
-                <td className="text-nowrap bd-highlight" style={{width: "8rem"}}>Rec Center membership is included in
-                  tuition for students enrolled in the current
+                <td>Rec Center membership is included in <br />
+                  tuition for students enrolled in the current<br />
                   semester.</td>
                 <td />
                 <td />
               </tr>
               <tr>
-                <td>Students* (enrolled at other colleges or universities)</td>
+                <td>Students* <br />(enrolled at other colleges or universities)</td>
                 <td>$30</td>
                 <td>$100</td>
                 <td>N/A</td>
@@ -42,7 +43,6 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          <br />
           *The student membership is the primary membership holder.
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence
@@ -52,7 +52,7 @@ const Membership = props => (
            account.
           <br />
           <br />
-
+          <br />
           <MDBTable>
             <MDBTableHead>
               <tr>
@@ -83,7 +83,6 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          <br />
           *The Non Benefits-Eligible OU Employee membership is the primary membership holder.
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence as the primary member can be added to their account.
@@ -91,11 +90,11 @@ const Membership = props => (
           <b>Dependent:</b> Those ages 2-17 can be added to the primary member's
           account.
           <br />
-          <br />
           <b>Payroll Deduction</b> — Faculty and staff with 12- or 9-month appointments may pay for annual spouse/dependents
           Rec Center membership through payroll deduction, where fees are automatically deducted from the employee’s
           paycheck in accordance with the university schedule. A payroll deduction form must be completed and signed
           when submitting a membership application.
+          <br />
           <br />
           <br />
           <MDBTable>
@@ -128,7 +127,6 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          <br />
           *The community membership is the primary membership holder.
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence as the primary member can be added to their account.
@@ -137,6 +135,25 @@ const Membership = props => (
           account.
           <br />
           <br />
+          <br />
+          <a><b>Guest Passes</b></a><br />
+          <p>-Guests of members are $10 per day, and there is a maximum of two guests per day that can be sponsored by a single member.<br />
+             -Guests 16 and older must show state-issued photo ID.<br />
+             -Guests sign-in with their sponsor member and must be accompanied by that member at all times within the facility.<br />
+          </p>
+          <br />
+          <a><b> Mini-Passes</b></a><br />
+          <p>Eligible affiliates, who do not wish to join the Rec Center as a full member, may purchase a 10-entry mini-pass for $80.
+           The purchaser must be eligible to purchase a full membership. Mini-Passes expire one year from purchase date,
+            are for individual use only and are non-transferable. Mini-Passes do not include entry to GroupX classes but
+             are eligible for single class passes.
+          </p><br />
+          <a><b>Refund</b></a><br />
+          <p>Refunds are issued for medical or relocation purposes only. All requests must be submitted in writing to the Rec
+          Center Director. All key fobs (if applicable) must be surrendered before a refund will be made.
+          Refunds take about three to four weeks to process and have a $25 processing fee deducted from approved refund amount.<br />
+          <br />
+          <b><i>Memberships are non-transferable.</i></b></p>
           </MDBContainer>
        </div>
 );
