@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Translate, translate } from 'react-jhipster';
 import { connect } from 'react-redux';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
@@ -23,22 +23,21 @@ export const RegisterPage = (props: IRegisterProps) => {
 
   const updatePassword = event => setPassword(event.target.value);
   return (
-    <Row className="justify-content-center">
+    <Row>
       <Col
-        md="4"
+        md="5"
         className="justify-content-center"
         style={{ backgroundColor: '#877148', marginLeft: '-10px', marginTop: '-20px', marginBottom: '-20px' }}
       >
         <div style={{ padding: 20 }}>
           <div style={{ fontSize: '24px', fontWeight: 600, color: 'white' }}>Long break? Get back on track!</div>
-          <Link to="/login">
-            <Translate contentKey="global.messages.info.authenticated.link">
-              <Button>Sign in</Button>
-            </Translate>
-          </Link>
+          <Media width="100%" src={'content/images/grizzbear.svg'} alt="Grizz bear" />
+          <Button color="info">
+            <Link to="/login">Sign In</Link>
+          </Button>
         </div>
       </Col>
-      <Col md="8">
+      <Col md="7">
         <Row className="justify-content-center">
           <Col md="8">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
