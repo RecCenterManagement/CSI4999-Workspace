@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBContainer } from 'mdbreact';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 const Membership = props => (
-      <div>
-      <MDBContainer>
+      <div style={{ backgroundColor: '#8e774d' }}>
+       <br />
+      <MDBContainer style={{ backgroundColor: '#fafafa' }}>
+          <br /> <Link to="/register">Click here to register</Link><br />
           <a><b>Membership Rates and Information</b></a><br />
-          <MDBTable>
-            <MDBTableHead>
+          <MDBTable style={{ backgroundColor: '#efebe9' }}>
+            <MDBTableHead style={{ backgroundColor: '#8d6e63' }}>
               <tr>
                 <th>Student</th>
                 <th>1 Month</th>
@@ -43,7 +46,7 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          *The student membership is the primary membership holder.
+          <i>*The student membership is the primary membership holder.</i>
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence
           as the primary member can be added to their account.
@@ -53,8 +56,8 @@ const Membership = props => (
           <br />
           <br />
           <br />
-          <MDBTable>
-            <MDBTableHead>
+          <MDBTable style={{ backgroundColor: '#efebe9' }}>
+            <MDBTableHead style={{ backgroundColor: '#8d6e63' }}>
               <tr>
                 <th>Employees</th>
                 <th>1 Month</th>
@@ -83,7 +86,7 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          *The Non Benefits-Eligible OU Employee membership is the primary membership holder.
+          <i>*The Non Benefits-Eligible OU Employee membership is the primary membership holder.</i>
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence as the primary member can be added to their account.
           <br />
@@ -97,8 +100,8 @@ const Membership = props => (
           <br />
           <br />
           <br />
-          <MDBTable>
-            <MDBTableHead>
+          <MDBTable style={{ backgroundColor: '#efebe9' }}>
+            <MDBTableHead style={{ backgroundColor: '#8d6e63' }}>
               <tr>
                 <th>Community</th>
                 <th>1 Month</th>
@@ -127,7 +130,7 @@ const Membership = props => (
               </tr>
             </MDBTableBody>
           </MDBTable>
-          *The community membership is the primary membership holder.
+          <i>*The community membership is the primary membership holder.</i>
           <br />
           <b>Secondary:</b> individuals 18 and older who live in the same residence as the primary member can be added to their account.
           <br />
@@ -153,8 +156,9 @@ const Membership = props => (
           Center Director. All key fobs (if applicable) must be surrendered before a refund will be made.
           Refunds take about three to four weeks to process and have a $25 processing fee deducted from approved refund amount.<br />
           <br />
-          <b><i>Memberships are non-transferable.</i></b></p>
+          <b><i>Memberships are non-transferable.</i></b></p><br />
           </MDBContainer>
+          <br />
        </div>
 );
 
