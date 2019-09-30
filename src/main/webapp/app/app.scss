@@ -28,7 +28,9 @@ a {
     height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem;
+    padding: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
     .card {
       padding: 1rem;
     }
@@ -39,6 +41,36 @@ a {
       }
     }
   }
+}
+
+.wrapping-container {
+  margin: 1em 1em 0em;
+}
+
+.weight-bear-containers {
+  background-color: #8e774d;
+  margin-top: -4px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weight-bear-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.weight-bear-subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+
+.weight-bear-button {
+  width: 40%;
+  align-self: flex-end;
 }
 
 .fullscreen {

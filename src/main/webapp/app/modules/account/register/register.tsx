@@ -24,24 +24,19 @@ export const RegisterPage = (props: IRegisterProps) => {
   const updatePassword = event => setPassword(event.target.value);
   return (
     <Row>
-      <Col
-        md="5"
-        className="justify-content-center"
-        style={{ backgroundColor: '#877148', marginLeft: '-10px', marginTop: '-20px', marginBottom: '-20px' }}
-      >
-        <div style={{ padding: 20 }}>
-          <div style={{ fontSize: '24px', fontWeight: 600, color: 'white' }}>Long break? Get back on track!</div>
-          <Media width="100%" src={'content/images/grizzbear.svg'} alt="Grizz bear" />
-          <Button color="info">
-            <Link to="/login">Sign In</Link>
-          </Button>
-        </div>
+      <Col md="5" className="weight-bear-containers">
+        <div className="weight-bear-title">Long break? Get back on track!</div>
+        <Media width="100%" src={'content/images/grizzbear.svg'} alt="Grizz bear" />
+        <div className="weight-bear-subtitle">Continue your fitness journey at Oakland's University Recreation and Well-Being</div>
+        <Button className="weight-bear-button" tag={Link} to="/login" color="info">
+          Sign In
+        </Button>
       </Col>
       <Col md="7">
         <Row className="justify-content-center">
           <Col md="8">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <div className="justify-content-center" style={{ fontSize: '32px', fontWeight: 600, color: '#877148', alignSelf: 'center' }}>
+              <div className="justify-content-center" style={{ fontSize: '32px', fontWeight: 600, color: '#8e774d', alignSelf: 'center' }}>
                 <Translate contentKey="register.title">Register</Translate>
               </div>
             </div>

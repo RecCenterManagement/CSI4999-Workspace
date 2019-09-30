@@ -22,23 +22,13 @@ export const Login = (props: ILoginProps) => {
       <Col background-color="#dfd3b5" md="7">
         <LoginModal handleLogin={handleLogin} loginError={props.loginError} />
       </Col>
-      <Col
-        md="5"
-        className="justify-content-center"
-        style={{ backgroundColor: '#877148', marginRight: '-10px', marginTop: '-20px', marginBottom: '-20px' }}
-      >
-        <div style={{ padding: 20 }}>
-          <div style={{ fontSize: '24px', fontWeight: 600, color: 'white' }}>
-            <Translate contentKey="global.messages.info.register.noaccount">Don't have an account yet?</Translate>
-            <Media width="100%" src={'content/images/grizzbear.svg'} alt="Grizz bear" />
-            <div style={{ fontSize: '18px', fontWeight: 500 }}>
-              Start your fitness journey at Oakland's University Recreation and Well-Being
-            </div>
-          </div>
-          <Button color="info">
-            <Link to="/register">Register</Link>
-          </Button>
-        </div>
+      <Col md="5" className="weight-bear-containers">
+        <div className="weight-bear-title">Don't have an account yet?</div>
+        <Media width="100%" src={'content/images/grizzbear.svg'} alt="Grizz bear" />
+        <div className="weight-bear-subtitle">Start your fitness journey at Oakland's University Recreation and Well-Being</div>
+        <Button tag={Link} to="register" color="info" className="weight-bear-button">
+          Register
+        </Button>
       </Col>
     </Row>
   );

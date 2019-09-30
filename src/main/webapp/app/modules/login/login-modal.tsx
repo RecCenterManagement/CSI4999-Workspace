@@ -21,7 +21,7 @@ class LoginModal extends React.Component<ILoginModalProps> {
     return (
       <div id="login-page">
         <AvForm onSubmit={this.handleSubmit}>
-          <div className="justify-content-center" style={{ fontSize: '32px', fontWeight: 600, color: '#877148', alignSelf: 'center' }}>
+          <div className="justify-content-center" style={{ fontSize: '32px', fontWeight: 600, color: '#8e774d', alignSelf: 'center' }}>
             <Translate contentKey="login.title">Sign in</Translate>
           </div>
           <Row>
