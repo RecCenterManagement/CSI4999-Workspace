@@ -8,3 +8,27 @@ Main page styles
   background: url('../../../content/images/jhipster_family_member_0.svg') no-repeat center top;
   background-size: contain;
 }
+
+.backgroundHome {
+  background: url('RecCenter.svg') no-repeat right center;
+  background-color: #343434;
+  margin: -16px;
+}
+
+.homeButton {
+  background: #b59a57;
+  height: 30%;
+}
+
+.buttonDiv {
+  margin: 5%;
+}
+
+.title {
+  margin: 5%;
+  position: absolute;
+  right: 0px;
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+}

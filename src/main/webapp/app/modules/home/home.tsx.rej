@@ -1,0 +1,28 @@
+diff a/src/main/webapp/app/modules/home/home.tsx b/src/main/webapp/app/modules/home/home.tsx	(rejected hunks)
+@@ -18,13 +18,13 @@ export const Home = (props: IHomeProp) => {
+-    <Row className= "backgroundHome" style={{ height: '80vh' }}>
+-          <div className= "buttonDiv">
+-            <Button className="homeButton" block>
+-              Membership
+-            </Button>
+-            <Button className="homeButton" block >
+-              Checkout Equipment
+-            </Button>
+-            <Button className="homeButton" block>
+-              Checkout Rooms
+-            </Button>
+-          </div>
+-    <span className="title"> UNIVERSITY RECREATION AND WELL-BEING </span>
++    <Row className="backgroundHome" style={{ height: '80vh' }}>
++      <div className="buttonDiv">
++        <Button className="homeButton" block>
++          Membership
++        </Button>
++        <Button className="homeButton" block>
++          Checkout Equipment
++        </Button>
++        <Button className="homeButton" block>
++          Checkout Rooms
++        </Button>
++      </div>
++      <span className="title"> UNIVERSITY RECREATION AND WELL-BEING </span>
