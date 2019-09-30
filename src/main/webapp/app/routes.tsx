@@ -14,6 +14,7 @@ import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
+import Membership from 'app/modules/membership/membership';
 
 // tslint:disable:space-in-parens
 const Account = Loadable({
@@ -30,6 +31,7 @@ const Admin = Loadable({
 const Routes = () => (
   <div className="view-routes">
     <Switch>
+      <ErrorBoundaryRoute path="/membership" component={Membership} />
       <ErrorBoundaryRoute path="/login" component={Login} />
       <ErrorBoundaryRoute path="/logout" component={Logout} />
       <ErrorBoundaryRoute path="/register" component={Register} />

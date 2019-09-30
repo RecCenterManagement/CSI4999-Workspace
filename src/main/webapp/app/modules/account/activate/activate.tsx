@@ -72,6 +72,9 @@ export const ActivatePage = (props: IActivateProps) => {
           {props.activationFailure ? failureAlert : undefined}
         </Col>
       </Row>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

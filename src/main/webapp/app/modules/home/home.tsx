@@ -17,7 +17,7 @@ export const Home = (props: IHomeProp) => {
   return (
     <Row className="backgroundHome" style={{ height: '80vh' }}>
       <div className="buttonDiv">
-        <Button className="homeButton" block>
+        <Button tag={Link} to="membership" className="homeButton" style={{ paddingTop: '43%' }} block>
           Membership
         </Button>
         <Button className="homeButton" block>
