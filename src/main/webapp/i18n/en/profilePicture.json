@@ -1,0 +1,23 @@
+{
+  "recCenterManagementApp": {
+    "profilePicture": {
+      "home": {
+        "title": "Profile Pictures",
+        "createLabel": "Create a new Profile Picture",
+        "createOrEditLabel": "Create or edit a Profile Picture",
+        "notFound": "No Profile Pictures found"
+      },
+      "created": "A new Profile Picture is created with identifier {{ param }}",
+      "updated": "A Profile Picture is updated with identifier {{ param }}",
+      "deleted": "A Profile Picture is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Profile Picture {{ id }}?"
+      },
+      "detail": {
+        "title": "Profile Picture"
+      },
+      "imageData": "Image Data",
+      "user": "User"
+    }
+  }
+}
