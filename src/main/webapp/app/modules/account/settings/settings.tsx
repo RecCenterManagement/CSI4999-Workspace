@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { Translate, translate, setFileData } from 'react-jhipster';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
@@ -8,22 +7,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import { getEntity, updateEntity, createEntity, setBlob } from '../../../entities/profile-picture/profile-picture.reducer';
 import { saveAccountSettings, reset } from './settings.reducer';
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  CardSubtitle,
-  Col,
-  Button,
-  Row
-} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, Col, Button, Row } from 'reactstrap';
 
 export interface IUserSettingsProps extends StateProps, DispatchProps {}
 
