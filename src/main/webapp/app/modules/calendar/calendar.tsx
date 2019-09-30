@@ -146,7 +146,6 @@ export const CalendarView = (props: ICalendarStateProp) => {
       <Calendar
         localizer={localizer}
         events={props.reservationList.map(reservation => {
-          console.log(typeof reservation.startTime);
           return {
             id: reservation.id,
             allDay: false,
