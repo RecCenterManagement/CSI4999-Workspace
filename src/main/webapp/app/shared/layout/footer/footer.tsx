@@ -13,12 +13,7 @@ const Footer = props => (
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow className="py-4 d-flex align-items-center">
           <MDBCol md="6" lg="5" className="text-center text-md-left mb-4 mb-md-0">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Oakland_University_logo.png"
-              width="200"
-              className="img-fluid"
-              alt=""
-            />
+            <img src="../../../content/images/Oakland_University_logo.png" width="200" className="img-fluid" alt="" />
           </MDBCol>
           <MDBCol md="6" lg="6" className="text-center text-md-left">
             <a href="tel:248-370-2100">
