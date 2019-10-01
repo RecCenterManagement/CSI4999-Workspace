@@ -1,7 +1,7 @@
 import React from 'react';
 import { Translate } from 'react-jhipster';
 
-import { Button, NavbarBrand } from 'reactstrap';
+import { NavItem, NavLink, Button, NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
 
 export const BrandIcon = props => (
@@ -34,3 +34,22 @@ export const SignInButton = props =>
       </Button>
     </>
   );
+export const Calendar = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/calendar" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.calendar">Calendar</Translate>
+      </span>
+    </NavLink>
+  </NavItem>
+);
+
+export const Home = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.home">Home</Translate>
+      </span>
+    </NavLink>
+  </NavItem>
+);
