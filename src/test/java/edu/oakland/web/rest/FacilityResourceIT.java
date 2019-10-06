@@ -37,6 +37,26 @@ public class FacilityResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_FOOTAGE = 0;
+    private static final Integer UPDATED_FOOTAGE = 1;
+    private static final Integer SMALLER_FOOTAGE = 0 - 1;
+
+    private static final Integer DEFAULT_CAPACITY = 0;
+    private static final Integer UPDATED_CAPACITY = 1;
+    private static final Integer SMALLER_CAPACITY = 0 - 1;
+
+    private static final String DEFAULT_AV_SUPPORT = "AAAAAAAAAA";
+    private static final String UPDATED_AV_SUPPORT = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_FOOD_ALLOWED = false;
+    private static final Boolean UPDATED_FOOD_ALLOWED = true;
+
+    private static final String DEFAULT_COLOR_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_COLOR_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
     @Autowired
     private FacilityRepository facilityRepository;
 
@@ -82,7 +102,13 @@ public class FacilityResourceIT {
      */
     public static Facility createEntity(EntityManager em) {
         Facility facility = new Facility()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .footage(DEFAULT_FOOTAGE)
+            .capacity(DEFAULT_CAPACITY)
+            .avSupport(DEFAULT_AV_SUPPORT)
+            .foodAllowed(DEFAULT_FOOD_ALLOWED)
+            .colorCode(DEFAULT_COLOR_CODE)
+            .description(DEFAULT_DESCRIPTION);
         return facility;
     }
     /**
@@ -93,7 +119,13 @@ public class FacilityResourceIT {
      */
     public static Facility createUpdatedEntity(EntityManager em) {
         Facility facility = new Facility()
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .footage(UPDATED_FOOTAGE)
+            .capacity(UPDATED_CAPACITY)
+            .avSupport(UPDATED_AV_SUPPORT)
+            .foodAllowed(UPDATED_FOOD_ALLOWED)
+            .colorCode(UPDATED_COLOR_CODE)
+            .description(UPDATED_DESCRIPTION);
         return facility;
     }
 
@@ -118,6 +150,12 @@ public class FacilityResourceIT {
         assertThat(facilityList).hasSize(databaseSizeBeforeCreate + 1);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
         assertThat(testFacility.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testFacility.getFootage()).isEqualTo(DEFAULT_FOOTAGE);
+        assertThat(testFacility.getCapacity()).isEqualTo(DEFAULT_CAPACITY);
+        assertThat(testFacility.getAvSupport()).isEqualTo(DEFAULT_AV_SUPPORT);
+        assertThat(testFacility.isFoodAllowed()).isEqualTo(DEFAULT_FOOD_ALLOWED);
+        assertThat(testFacility.getColorCode()).isEqualTo(DEFAULT_COLOR_CODE);
+        assertThat(testFacility.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -160,6 +198,42 @@ public class FacilityResourceIT {
 
     @Test
     @Transactional
+    public void checkFootageIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facilityRepository.findAll().size();
+        // set the field null
+        facility.setFootage(null);
+
+        // Create the Facility, which fails.
+
+        restFacilityMockMvc.perform(post("/api/facilities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(facility)))
+            .andExpect(status().isBadRequest());
+
+        List<Facility> facilityList = facilityRepository.findAll();
+        assertThat(facilityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFoodAllowedIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facilityRepository.findAll().size();
+        // set the field null
+        facility.setFoodAllowed(null);
+
+        // Create the Facility, which fails.
+
+        restFacilityMockMvc.perform(post("/api/facilities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(facility)))
+            .andExpect(status().isBadRequest());
+
+        List<Facility> facilityList = facilityRepository.findAll();
+        assertThat(facilityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllFacilities() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);
@@ -169,7 +243,13 @@ public class FacilityResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].footage").value(hasItem(DEFAULT_FOOTAGE)))
+            .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY)))
+            .andExpect(jsonPath("$.[*].avSupport").value(hasItem(DEFAULT_AV_SUPPORT.toString())))
+            .andExpect(jsonPath("$.[*].foodAllowed").value(hasItem(DEFAULT_FOOD_ALLOWED.booleanValue())))
+            .andExpect(jsonPath("$.[*].colorCode").value(hasItem(DEFAULT_COLOR_CODE.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
     @Test
@@ -183,7 +263,13 @@ public class FacilityResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(facility.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.footage").value(DEFAULT_FOOTAGE))
+            .andExpect(jsonPath("$.capacity").value(DEFAULT_CAPACITY))
+            .andExpect(jsonPath("$.avSupport").value(DEFAULT_AV_SUPPORT.toString()))
+            .andExpect(jsonPath("$.foodAllowed").value(DEFAULT_FOOD_ALLOWED.booleanValue()))
+            .andExpect(jsonPath("$.colorCode").value(DEFAULT_COLOR_CODE.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -207,7 +293,13 @@ public class FacilityResourceIT {
         // Disconnect from session so that the updates on updatedFacility are not directly saved in db
         em.detach(updatedFacility);
         updatedFacility
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .footage(UPDATED_FOOTAGE)
+            .capacity(UPDATED_CAPACITY)
+            .avSupport(UPDATED_AV_SUPPORT)
+            .foodAllowed(UPDATED_FOOD_ALLOWED)
+            .colorCode(UPDATED_COLOR_CODE)
+            .description(UPDATED_DESCRIPTION);
 
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -219,6 +311,12 @@ public class FacilityResourceIT {
         assertThat(facilityList).hasSize(databaseSizeBeforeUpdate);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
         assertThat(testFacility.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testFacility.getFootage()).isEqualTo(UPDATED_FOOTAGE);
+        assertThat(testFacility.getCapacity()).isEqualTo(UPDATED_CAPACITY);
+        assertThat(testFacility.getAvSupport()).isEqualTo(UPDATED_AV_SUPPORT);
+        assertThat(testFacility.isFoodAllowed()).isEqualTo(UPDATED_FOOD_ALLOWED);
+        assertThat(testFacility.getColorCode()).isEqualTo(UPDATED_COLOR_CODE);
+        assertThat(testFacility.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test
