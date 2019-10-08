@@ -48,6 +48,7 @@ public class CacheConfiguration {
             createCache(cm, edu.oakland.domain.Facility.class.getName() + ".reservations");
             createCache(cm, edu.oakland.domain.Reservation.class.getName());
             createCache(cm, edu.oakland.domain.Reservation.class.getName() + ".facilities");
+            createCache(cm, edu.oakland.domain.Equipment.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

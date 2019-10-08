@@ -11,6 +11,7 @@
         "profilePicture": "Profile Picture",
         "facility": "Facility",
         "reservation": "Reservation",
+        "equipment": "Equipment",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
