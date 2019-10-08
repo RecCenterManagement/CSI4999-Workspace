@@ -1,0 +1,22 @@
+{
+  "recCenterManagementApp": {
+    "equipment": {
+      "home": {
+        "title": "Equipment",
+        "createLabel": "Crear nuevo Equipment",
+        "createOrEditLabel": "Crear o editar Equipment",
+        "notFound": "No Equipment found"
+      },
+      "created": "Un nuevo Equipment ha sido creado con el identificador {{ param }}",
+      "updated": "Un Equipment ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Equipment ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Equipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Equipment"
+      },
+      "name": "Name"
+    }
+  }
+}

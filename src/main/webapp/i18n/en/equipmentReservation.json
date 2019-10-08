@@ -1,0 +1,23 @@
+{
+  "recCenterManagementApp": {
+    "equipmentReservation": {
+      "home": {
+        "title": "Equipment Reservations",
+        "createLabel": "Create a new Equipment Reservation",
+        "createOrEditLabel": "Create or edit a Equipment Reservation",
+        "notFound": "No Equipment Reservations found"
+      },
+      "created": "A new Equipment Reservation is created with identifier {{ param }}",
+      "updated": "A Equipment Reservation is updated with identifier {{ param }}",
+      "deleted": "A Equipment Reservation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Equipment Reservation {{ id }}?"
+      },
+      "detail": {
+        "title": "Equipment Reservation"
+      },
+      "count": "Count",
+      "equipment": "Equipment"
+    }
+  }
+}

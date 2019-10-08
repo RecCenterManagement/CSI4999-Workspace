@@ -1,5 +1,29 @@
 {
-    "name": "Reservation",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "reservation",
+            "relationshipName": "user",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "facility",
+            "otherEntityRelationshipName": "reservations",
+            "relationshipName": "facilities",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "equipmentReservations",
+            "otherEntityName": "equipmentReservation",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "reservation"
+        }
+    ],
     "fields": [
         {
             "fieldName": "event",
@@ -30,30 +54,12 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "reservation",
-            "relationshipName": "user",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "facility",
-            "otherEntityRelationshipName": "reservations",
-            "relationshipName": "facilities",
-            "otherEntityField": "id",
-            "ownerSide": true
-        }
-    ],
     "changelogDate": "20190924230652",
-    "entityTableName": "reservation",
     "dto": "no",
-    "pagination": "pagination",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "reservation",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": true,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "pagination"
 }
