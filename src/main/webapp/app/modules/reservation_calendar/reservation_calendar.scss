@@ -1,0 +1,78 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.hipster {
+  display: inline-block;
+  width: 100%;
+  height: 497px;
+  background: url('../../../content/images/jhipster_family_member_0.svg') no-repeat center top;
+  background-size: contain;
+}
+
+.rbc-events-container {
+  pointer-events: none;
+}
+
+.rbc-time-slot:hover {
+  background-color: #b0b0b0;
+}
+
+.toggle-button-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.toggle-button-column {
+  width: 30%;
+}
+
+.toggle-button-room {
+  padding: 1rem;
+  width: 100%;
+  font-size: 24px;
+}
+
+.toggle-button-room.toggle-button-false {
+  background-color: white !important;
+  color: black;
+}
+
+.toggle-button-room.toggle-button-false {
+  background-color: white !important;
+  color: black;
+}
+
+.reservation-calendar-wrapper {
+  position: relative;
+}
+
+.reservation-calendar-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: center;
+  padding-top: 48px;
+  color: white;
+  font-weight: bold;
+  font-size: 48px;
+}
+
+.reservation-calendar-overlay-enabled {
+  display: none;
+  pointer-events: none;
+}
+
+.reservation-calendar-overlay-disabled {
+  pointer-events: auto;
+}
+
+.reservation-calendar-subtitle {
+  text-align: center;
+  width: 100%;
+  font-size: 36px;
+}

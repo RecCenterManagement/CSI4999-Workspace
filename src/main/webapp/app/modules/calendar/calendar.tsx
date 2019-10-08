@@ -17,7 +17,7 @@ import { convertDateTimeToServer } from 'app/shared/util/date-utils';
 
 export type ICalendarStateProp = StateProps;
 
-export const CalendarView = (props: ICalendarStateProp) => {
+const CalendarView = (props: ICalendarStateProp) => {
   // Run on page load.
   useEffect(() => {
     props.getEntities();

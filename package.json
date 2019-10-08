@@ -128,6 +128,7 @@
     "lint:fix": "npm run lint -- --fix",
     "cleanup": "rimraf build/resources/main/static/",
     "start": "npm run webpack:dev",
+    "start:gradle": "gradlew.bat",
     "start-tls": "npm run webpack:dev -- --env.tls",
     "jest": "jest --coverage --logHeapUsage --maxWorkers=2 --config src/test/javascript/jest.conf.js",
     "jest:update": "npm run jest -- --updateSnapshot",
