@@ -30,7 +30,13 @@ public class EquipmentReservation implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnoreProperties("equipmentReservations")
     private Equipment equipment;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("equipmentReservations")
+    private Reservation reservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -65,6 +71,19 @@ public class EquipmentReservation implements Serializable {
 
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public EquipmentReservation reservation(Reservation reservation) {
+        this.reservation = reservation;
+        return this;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

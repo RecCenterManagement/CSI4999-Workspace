@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="equipment"/>
 
+        <addForeignKeyConstraint baseColumnNames="reservation_id"
+                                 baseTableName="equipment_reservation"
+                                 constraintName="fk_equipment_reservation_reservation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="reservation"/>
+
     </changeSet>
 </databaseChangeLog>

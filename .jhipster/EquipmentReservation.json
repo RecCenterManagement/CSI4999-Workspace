@@ -9,7 +9,18 @@
             "relationshipValidateRules": [
                 "required"
             ],
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "equipmentReservation"
+        },
+        {
+            "relationshipName": "reservation",
+            "otherEntityName": "reservation",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "equipmentReservation"
         }
     ],
     "fields": [

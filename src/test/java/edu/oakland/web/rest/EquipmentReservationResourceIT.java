@@ -3,6 +3,7 @@ package edu.oakland.web.rest;
 import edu.oakland.RecCenterManagementApp;
 import edu.oakland.domain.EquipmentReservation;
 import edu.oakland.domain.Equipment;
+import edu.oakland.domain.Reservation;
 import edu.oakland.repository.EquipmentReservationRepository;
 import edu.oakland.service.EquipmentReservationService;
 import edu.oakland.web.rest.errors.ExceptionTranslator;
@@ -95,6 +96,16 @@ public class EquipmentReservationResourceIT {
             equipment = TestUtil.findAll(em, Equipment.class).get(0);
         }
         equipmentReservation.setEquipment(equipment);
+        // Add required entity
+        Reservation reservation;
+        if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
+            reservation = ReservationResourceIT.createEntity(em);
+            em.persist(reservation);
+            em.flush();
+        } else {
+            reservation = TestUtil.findAll(em, Reservation.class).get(0);
+        }
+        equipmentReservation.setReservation(reservation);
         return equipmentReservation;
     }
     /**
@@ -116,6 +127,16 @@ public class EquipmentReservationResourceIT {
             equipment = TestUtil.findAll(em, Equipment.class).get(0);
         }
         equipmentReservation.setEquipment(equipment);
+        // Add required entity
+        Reservation reservation;
+        if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
+            reservation = ReservationResourceIT.createUpdatedEntity(em);
+            em.persist(reservation);
+            em.flush();
+        } else {
+            reservation = TestUtil.findAll(em, Reservation.class).get(0);
+        }
+        equipmentReservation.setReservation(reservation);
         return equipmentReservation;
     }
 

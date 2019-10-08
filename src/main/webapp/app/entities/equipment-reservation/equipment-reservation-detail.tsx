@@ -37,6 +37,10 @@ export class EquipmentReservationDetail extends React.Component<IEquipmentReserv
               <Translate contentKey="recCenterManagementApp.equipmentReservation.equipment">Equipment</Translate>
             </dt>
             <dd>{equipmentReservationEntity.equipment ? equipmentReservationEntity.equipment.id : ''}</dd>
+            <dt>
+              <Translate contentKey="recCenterManagementApp.equipmentReservation.reservation">Reservation</Translate>
+            </dt>
+            <dd>{equipmentReservationEntity.reservation ? equipmentReservationEntity.reservation.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/equipment-reservation" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -17,7 +17,8 @@
         "title": "Equipment Reservation"
       },
       "count": "Count",
-      "equipment": "Equipment"
+      "equipment": "Equipment",
+      "reservation": "Reservation"
     }
   }
 }

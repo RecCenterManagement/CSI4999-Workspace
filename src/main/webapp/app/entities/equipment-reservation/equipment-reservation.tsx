@@ -45,6 +45,9 @@ export class EquipmentReservation extends React.Component<IEquipmentReservationP
                   <th>
                     <Translate contentKey="recCenterManagementApp.equipmentReservation.equipment">Equipment</Translate>
                   </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.equipmentReservation.reservation">Reservation</Translate>
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -60,6 +63,13 @@ export class EquipmentReservation extends React.Component<IEquipmentReservationP
                     <td>
                       {equipmentReservation.equipment ? (
                         <Link to={`equipment/${equipmentReservation.equipment.id}`}>{equipmentReservation.equipment.id}</Link>
+                      ) : (
+                        ''
+                      )}
+                    </td>
+                    <td>
+                      {equipmentReservation.reservation ? (
+                        <Link to={`reservation/${equipmentReservation.reservation.id}`}>{equipmentReservation.reservation.id}</Link>
                       ) : (
                         ''
                       )}

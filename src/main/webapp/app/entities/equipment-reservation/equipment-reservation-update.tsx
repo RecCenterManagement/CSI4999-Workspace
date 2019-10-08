@@ -9,6 +9,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IEquipment } from 'app/shared/model/equipment.model';
 import { getEntities as getEquipment } from 'app/entities/equipment/equipment.reducer';
+import { IReservation } from 'app/shared/model/reservation.model';
+import { getEntities as getReservations } from 'app/entities/reservation/reservation.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './equipment-reservation.reducer';
 import { IEquipmentReservation } from 'app/shared/model/equipment-reservation.model';
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
@@ -19,6 +21,7 @@ export interface IEquipmentReservationUpdateProps extends StateProps, DispatchPr
 export interface IEquipmentReservationUpdateState {
   isNew: boolean;
   equipmentId: string;
+  reservationId: string;
 }
 
 export class EquipmentReservationUpdate extends React.Component<IEquipmentReservationUpdateProps, IEquipmentReservationUpdateState> {
@@ -26,6 +29,7 @@ export class EquipmentReservationUpdate extends React.Component<IEquipmentReserv
     super(props);
     this.state = {
       equipmentId: '0',
+      reservationId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -44,6 +48,7 @@ export class EquipmentReservationUpdate extends React.Component<IEquipmentReserv
     }
 
     this.props.getEquipment();
+    this.props.getReservations();
   }
 
   saveEntity = (event, errors, values) => {
@@ -67,7 +72,7 @@ export class EquipmentReservationUpdate extends React.Component<IEquipmentReserv
   };
 
   render() {
-    const { equipmentReservationEntity, equipment, loading, updating } = this.props;
+    const { equipmentReservationEntity, equipment, reservations, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -135,6 +140,30 @@ export class EquipmentReservationUpdate extends React.Component<IEquipmentReserv
                     <Translate contentKey="entity.validation.required">This field is required.</Translate>
                   </AvFeedback>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="equipment-reservation-reservation">
+                    <Translate contentKey="recCenterManagementApp.equipmentReservation.reservation">Reservation</Translate>
+                  </Label>
+                  <AvInput
+                    id="equipment-reservation-reservation"
+                    type="select"
+                    className="form-control"
+                    name="reservation.id"
+                    value={isNew ? reservations[0] && reservations[0].id : equipmentReservationEntity.reservation.id}
+                    required
+                  >
+                    {reservations
+                      ? reservations.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                  <AvFeedback>
+                    <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                  </AvFeedback>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/equipment-reservation" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
@@ -159,6 +188,7 @@ export class EquipmentReservationUpdate extends React.Component<IEquipmentReserv
 
 const mapStateToProps = (storeState: IRootState) => ({
   equipment: storeState.equipment.entities,
+  reservations: storeState.reservation.entities,
   equipmentReservationEntity: storeState.equipmentReservation.entity,
   loading: storeState.equipmentReservation.loading,
   updating: storeState.equipmentReservation.updating,
@@ -167,6 +197,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getEquipment,
+  getReservations,
   getEntity,
   updateEntity,
   createEntity,
