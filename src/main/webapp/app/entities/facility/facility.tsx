@@ -2,14 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-// tslint:disable-next-line:no-unused-variable
 import { Translate, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IFacilityProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -33,7 +31,7 @@ export class Facility extends React.Component<IFacilityProps> {
         </h2>
         <div className="table-responsive">
           {facilityList && facilityList.length > 0 ? (
-            <Table responsive>
+            <Table responsive aria-describedby="facility-heading">
               <thead>
                 <tr>
                   <th>
@@ -41,6 +39,24 @@ export class Facility extends React.Component<IFacilityProps> {
                   </th>
                   <th>
                     <Translate contentKey="recCenterManagementApp.facility.name">Name</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.footage">Footage</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.capacity">Capacity</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.avSupport">Av Support</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.foodAllowed">Food Allowed</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.colorCode">Color Code</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.description">Description</Translate>
                   </th>
                   <th />
                 </tr>
@@ -54,6 +70,12 @@ export class Facility extends React.Component<IFacilityProps> {
                       </Button>
                     </td>
                     <td>{facility.name}</td>
+                    <td>{facility.footage}</td>
+                    <td>{facility.capacity}</td>
+                    <td>{facility.avSupport}</td>
+                    <td>{facility.foodAllowed ? 'true' : 'false'}</td>
+                    <td>{facility.colorCode}</td>
+                    <td>{facility.description}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${facility.id}`} color="info" size="sm">

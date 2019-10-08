@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-// tslint:disable-next-line:no-unused-variable
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
@@ -12,7 +11,6 @@ import { IReservation } from 'app/shared/model/reservation.model';
 import { getEntities as getReservations } from 'app/entities/reservation/reservation.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
-// tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
@@ -105,6 +103,75 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                     name="name"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="footageLabel" for="facility-footage">
+                    <Translate contentKey="recCenterManagementApp.facility.footage">Footage</Translate>
+                  </Label>
+                  <AvField
+                    id="facility-footage"
+                    type="string"
+                    className="form-control"
+                    name="footage"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      min: { value: 0, errorMessage: translate('entity.validation.min', { min: 0 }) },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="capacityLabel" for="facility-capacity">
+                    <Translate contentKey="recCenterManagementApp.facility.capacity">Capacity</Translate>
+                  </Label>
+                  <AvField
+                    id="facility-capacity"
+                    type="string"
+                    className="form-control"
+                    name="capacity"
+                    validate={{
+                      min: { value: 0, errorMessage: translate('entity.validation.min', { min: 0 }) },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="avSupportLabel" for="facility-avSupport">
+                    <Translate contentKey="recCenterManagementApp.facility.avSupport">Av Support</Translate>
+                  </Label>
+                  <AvField
+                    id="facility-avSupport"
+                    type="text"
+                    name="avSupport"
+                    validate={{
+                      maxLength: { value: 180, errorMessage: translate('entity.validation.maxlength', { max: 180 }) }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="foodAllowedLabel" check>
+                    <AvInput id="facility-foodAllowed" type="checkbox" className="form-control" name="foodAllowed" />
+                    <Translate contentKey="recCenterManagementApp.facility.foodAllowed">Food Allowed</Translate>
+                  </Label>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="colorCodeLabel" for="facility-colorCode">
+                    <Translate contentKey="recCenterManagementApp.facility.colorCode">Color Code</Translate>
+                  </Label>
+                  <AvField id="facility-colorCode" type="text" name="colorCode" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="descriptionLabel" for="facility-description">
+                    <Translate contentKey="recCenterManagementApp.facility.description">Description</Translate>
+                  </Label>
+                  <AvField
+                    id="facility-description"
+                    type="text"
+                    name="description"
+                    validate={{
+                      maxLength: { value: 1000, errorMessage: translate('entity.validation.maxlength', { max: 1000 }) }
                     }}
                   />
                 </AvGroup>
