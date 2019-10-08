@@ -13,9 +13,9 @@ import reducer, {
   getEntity,
   updateEntity,
   reset
-} from 'app/entities/reservation/reservation.reducer';
+} from 'app/entities/equipment-reservation/equipment-reservation.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IReservation, defaultValue } from 'app/shared/model/reservation.model';
+import { IEquipmentReservation, defaultValue } from 'app/shared/model/equipment-reservation.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
@@ -29,9 +29,8 @@ describe('Entities reducer tests', () => {
   const initialState = {
     loading: false,
     errorMessage: null,
-    entities: [] as ReadonlyArray<IReservation>,
+    entities: [] as ReadonlyArray<IEquipmentReservation>,
     entity: defaultValue,
-    totalItems: 0,
     updating: false,
     updateSuccess: false
   };
@@ -61,18 +60,26 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_RESERVATION_LIST), REQUEST(ACTION_TYPES.FETCH_RESERVATION)], {}, state => {
-        expect(state).toMatchObject({
-          errorMessage: null,
-          updateSuccess: false,
-          loading: true
-        });
-      });
+      testMultipleTypes(
+        [REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST), REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION)],
+        {},
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: null,
+            updateSuccess: false,
+            loading: true
+          });
+        }
+      );
     });
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [REQUEST(ACTION_TYPES.CREATE_RESERVATION), REQUEST(ACTION_TYPES.UPDATE_RESERVATION), REQUEST(ACTION_TYPES.DELETE_RESERVATION)],
+        [
+          REQUEST(ACTION_TYPES.CREATE_EQUIPMENTRESERVATION),
+          REQUEST(ACTION_TYPES.UPDATE_EQUIPMENTRESERVATION),
+          REQUEST(ACTION_TYPES.DELETE_EQUIPMENTRESERVATION)
+        ],
         {},
         state => {
           expect(state).toMatchObject({
@@ -102,11 +109,11 @@ describe('Entities reducer tests', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes(
         [
-          FAILURE(ACTION_TYPES.FETCH_RESERVATION_LIST),
-          FAILURE(ACTION_TYPES.FETCH_RESERVATION),
-          FAILURE(ACTION_TYPES.CREATE_RESERVATION),
-          FAILURE(ACTION_TYPES.UPDATE_RESERVATION),
-          FAILURE(ACTION_TYPES.DELETE_RESERVATION)
+          FAILURE(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
+          FAILURE(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION),
+          FAILURE(ACTION_TYPES.CREATE_EQUIPMENTRESERVATION),
+          FAILURE(ACTION_TYPES.UPDATE_EQUIPMENTRESERVATION),
+          FAILURE(ACTION_TYPES.DELETE_EQUIPMENTRESERVATION)
         ],
         'error message',
         state => {
@@ -122,16 +129,15 @@ describe('Entities reducer tests', () => {
 
   describe('Successes', () => {
     it('should fetch all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }], headers: { 'x-total-count': 123 } };
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
           payload
         })
       ).toEqual({
         ...initialState,
         loading: false,
-        totalItems: payload.headers['x-total-count'],
         entities: payload.data
       });
     });
@@ -140,7 +146,7 @@ describe('Entities reducer tests', () => {
       const payload = { data: { 1: 'fake1' } };
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION),
           payload
         })
       ).toEqual({
@@ -154,7 +160,7 @@ describe('Entities reducer tests', () => {
       const payload = { data: 'fake payload' };
       expect(
         reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.CREATE_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.CREATE_EQUIPMENTRESERVATION),
           payload
         })
       ).toEqual({
@@ -168,7 +174,7 @@ describe('Entities reducer tests', () => {
     it('should delete entity', () => {
       const payload = 'fake payload';
       const toTest = reducer(undefined, {
-        type: SUCCESS(ACTION_TYPES.DELETE_RESERVATION),
+        type: SUCCESS(ACTION_TYPES.DELETE_EQUIPMENTRESERVATION),
         payload
       });
       expect(toTest).toMatchObject({
@@ -191,86 +197,86 @@ describe('Entities reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches ACTION_TYPES.FETCH_RESERVATION_LIST actions', async () => {
+    it('dispatches ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.FETCH_RESERVATION_LIST)
+          type: REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
           payload: resolvedObject
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.FETCH_RESERVATION actions', async () => {
+    it('dispatches ACTION_TYPES.FETCH_EQUIPMENTRESERVATION actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.FETCH_RESERVATION)
+          type: REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION),
           payload: resolvedObject
         }
       ];
       await store.dispatch(getEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.CREATE_RESERVATION actions', async () => {
+    it('dispatches ACTION_TYPES.CREATE_EQUIPMENTRESERVATION actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.CREATE_RESERVATION)
+          type: REQUEST(ACTION_TYPES.CREATE_EQUIPMENTRESERVATION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.CREATE_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.CREATE_EQUIPMENTRESERVATION),
           payload: resolvedObject
         },
         {
-          type: REQUEST(ACTION_TYPES.FETCH_RESERVATION_LIST)
+          type: REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
           payload: resolvedObject
         }
       ];
       await store.dispatch(createEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.UPDATE_RESERVATION actions', async () => {
+    it('dispatches ACTION_TYPES.UPDATE_EQUIPMENTRESERVATION actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.UPDATE_RESERVATION)
+          type: REQUEST(ACTION_TYPES.UPDATE_EQUIPMENTRESERVATION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.UPDATE_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.UPDATE_EQUIPMENTRESERVATION),
           payload: resolvedObject
         },
         {
-          type: REQUEST(ACTION_TYPES.FETCH_RESERVATION_LIST)
+          type: REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
           payload: resolvedObject
         }
       ];
       await store.dispatch(updateEntity({ id: 1 })).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
-    it('dispatches ACTION_TYPES.DELETE_RESERVATION actions', async () => {
+    it('dispatches ACTION_TYPES.DELETE_EQUIPMENTRESERVATION actions', async () => {
       const expectedActions = [
         {
-          type: REQUEST(ACTION_TYPES.DELETE_RESERVATION)
+          type: REQUEST(ACTION_TYPES.DELETE_EQUIPMENTRESERVATION)
         },
         {
-          type: SUCCESS(ACTION_TYPES.DELETE_RESERVATION),
+          type: SUCCESS(ACTION_TYPES.DELETE_EQUIPMENTRESERVATION),
           payload: resolvedObject
         },
         {
-          type: REQUEST(ACTION_TYPES.FETCH_RESERVATION_LIST)
+          type: REQUEST(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST)
         },
         {
-          type: SUCCESS(ACTION_TYPES.FETCH_RESERVATION_LIST),
+          type: SUCCESS(ACTION_TYPES.FETCH_EQUIPMENTRESERVATION_LIST),
           payload: resolvedObject
         }
       ];

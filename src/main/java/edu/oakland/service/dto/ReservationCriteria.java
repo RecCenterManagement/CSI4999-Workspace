@@ -39,6 +39,8 @@ public class ReservationCriteria implements Serializable, Criteria {
 
     private LongFilter facilitiesId;
 
+    private LongFilter equipmentReservationsId;
+
     public ReservationCriteria(){
     }
 
@@ -50,6 +52,7 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.endTime = other.endTime == null ? null : other.endTime.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.facilitiesId = other.facilitiesId == null ? null : other.facilitiesId.copy();
+        this.equipmentReservationsId = other.equipmentReservationsId == null ? null : other.equipmentReservationsId.copy();
     }
 
     @Override
@@ -113,6 +116,14 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.facilitiesId = facilitiesId;
     }
 
+    public LongFilter getEquipmentReservationsId() {
+        return equipmentReservationsId;
+    }
+
+    public void setEquipmentReservationsId(LongFilter equipmentReservationsId) {
+        this.equipmentReservationsId = equipmentReservationsId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -130,7 +141,8 @@ public class ReservationCriteria implements Serializable, Criteria {
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
             Objects.equals(userId, that.userId) &&
-            Objects.equals(facilitiesId, that.facilitiesId);
+            Objects.equals(facilitiesId, that.facilitiesId) &&
+            Objects.equals(equipmentReservationsId, that.equipmentReservationsId);
     }
 
     @Override
@@ -142,7 +154,8 @@ public class ReservationCriteria implements Serializable, Criteria {
         startTime,
         endTime,
         userId,
-        facilitiesId
+        facilitiesId,
+        equipmentReservationsId
         );
     }
 
@@ -156,6 +169,7 @@ public class ReservationCriteria implements Serializable, Criteria {
                 (endTime != null ? "endTime=" + endTime + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
                 (facilitiesId != null ? "facilitiesId=" + facilitiesId + ", " : "") +
+                (equipmentReservationsId != null ? "equipmentReservationsId=" + equipmentReservationsId + ", " : "") +
             "}";
     }
 

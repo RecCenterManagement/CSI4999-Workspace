@@ -21,7 +21,8 @@
       "startTime": "Start Time",
       "endTime": "End Time",
       "user": "User",
-      "facilities": "Facilities"
+      "facilities": "Facilities",
+      "equipmentReservations": "Equipment Reservations"
     }
   }
 }

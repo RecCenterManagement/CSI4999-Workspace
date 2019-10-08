@@ -4,6 +4,7 @@ import edu.oakland.RecCenterManagementApp;
 import edu.oakland.domain.Reservation;
 import edu.oakland.domain.User;
 import edu.oakland.domain.Facility;
+import edu.oakland.domain.EquipmentReservation;
 import edu.oakland.repository.ReservationRepository;
 import edu.oakland.service.ReservationService;
 import edu.oakland.web.rest.errors.ExceptionTranslator;
@@ -675,6 +676,26 @@ public class ReservationResourceIT {
 
         // Get all the reservationList where facilities equals to facilitiesId + 1
         defaultReservationShouldNotBeFound("facilitiesId.equals=" + (facilitiesId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllReservationsByEquipmentReservationsIsEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+        EquipmentReservation equipmentReservations = EquipmentReservationResourceIT.createEntity(em);
+        em.persist(equipmentReservations);
+        em.flush();
+        reservation.addEquipmentReservations(equipmentReservations);
+        reservationRepository.saveAndFlush(reservation);
+        Long equipmentReservationsId = equipmentReservations.getId();
+
+        // Get all the reservationList where equipmentReservations equals to equipmentReservationsId
+        defaultReservationShouldBeFound("equipmentReservationsId.equals=" + equipmentReservationsId);
+
+        // Get all the reservationList where equipmentReservations equals to equipmentReservationsId + 1
+        defaultReservationShouldNotBeFound("equipmentReservationsId.equals=" + (equipmentReservationsId + 1));
     }
 
     /**

@@ -2,14 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-// tslint:disable-next-line:no-unused-variable
 import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './reservation.reducer';
 import { IReservation } from 'app/shared/model/reservation.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
@@ -62,7 +60,7 @@ export class Reservation extends React.Component<IReservationProps, IReservation
         </h2>
         <div className="table-responsive">
           {reservationList && reservationList.length > 0 ? (
-            <Table responsive>
+            <Table responsive aria-describedby="reservation-heading">
               <thead>
                 <tr>
                   <th className="hand" onClick={this.sort('id')}>

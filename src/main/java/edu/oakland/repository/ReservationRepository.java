@@ -1,5 +1,4 @@
 package edu.oakland.repository;
-
 import edu.oakland.domain.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
