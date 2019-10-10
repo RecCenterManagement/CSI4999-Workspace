@@ -17,6 +17,12 @@
         "title": "Facility"
       },
       "name": "Name",
+      "footage": "Footage",
+      "capacity": "Capacity",
+      "avSupport": "Av Support",
+      "foodAllowed": "Food Allowed",
+      "colorCode": "Color Code",
+      "description": "Description",
       "reservations": "Reservations"
     }
   }
