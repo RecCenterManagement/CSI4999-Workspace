@@ -2,23 +2,21 @@ import './reservation_calendar.scss';
 
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import { Translate } from 'react-jhipster';
 import moment from 'moment';
 
-import { Row, Col, Alert, Button, Container, Form, Media } from 'reactstrap';
+import { Button } from 'reactstrap';
 
-import { Link } from 'react-router-dom';
-import { Translate } from 'react-jhipster';
 import { getEntities } from '../../entities/reservation/reservation.reducer';
 import { IRootState } from 'app/shared/reducers';
 import { convertDateTimeToServer } from 'app/shared/util/date-utils';
 
 export type IReservationCalendarStateProp = StateProps;
-
-const DragAndDropCalendar = withDragAndDrop(Calendar);
+export type IReservationCalendarDispatchProp = DispatchProps;
 
 const ToggleButton = ({ room_name, state, setState }) => {
   const onClick = () => {
@@ -32,45 +30,57 @@ const ToggleButton = ({ room_name, state, setState }) => {
   );
 };
 
-const defaultEvents = [
-  {
-    id: 14,
-    title: 'Today',
-    start: new Date(new Date().setHours(new Date().getHours() - 3)),
-    end: new Date(new Date().setHours(new Date().getHours() + 3))
-  },
-  {
-    id: 15,
-    title: 'Point in Time Event',
-    start: new Date(),
-    end: new Date()
-  }
-];
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const ReservationCalendarView = (props: IReservationCalendarStateProp) => {
+export const ReservationCalendarView: React.FC<Props> = props => {
   // Run on page load.
   useEffect(() => {
-    props.getEntities();
+    props.getEntities(0, 0, '');
   }, []);
 
-  /*
-  props.reservationList.map(reservation => {
-            return {
-              id: reservation.id,
-              allDay: false,
-              title: reservation.event,
-              start: convertDateTimeToServer(reservation.startTime),
-              end: convertDateTimeToServer(reservation.endTime),
-              desc: `${reservation.estimatedParticipants} participants`
-            };
-          })
-          */
+  // Run when reservation list updates.
+  useEffect(() => {
+    setEventList(generateEventList());
+  }, [props.reservationList]);
 
   // English calendar localization.
   const localizer = momentLocalizer(moment);
 
-  const [eventList, setEventList] = useState(defaultEvents);
+  // Function to convert reservations fetched from API to RBC events.
+  const generateEventList = () => {
+    return props.reservationList.map(reservation => {
+      return {
+        id: reservation.id,
+        title: reservation.event,
+        allDay: false,
+        start: convertDateTimeToServer(reservation.startTime),
+        end: convertDateTimeToServer(reservation.endTime),
+        desc: `${reservation.estimatedParticipants} participants`,
+        facilities: reservation.facilities,
+        temporary: false
+      };
+    });
+  };
 
+  // State stores.
+  const [eventList, setEventList] = useState(generateEventList());
+  const [temporaryEvent, setTemporaryEvent] = useState(null);
+
+  const fullEventList = () => [...eventList, temporaryEvent];
+
+  // Get the properties placed on each event.
+  const getEventProperties = (event, start, end, isSelected) => {
+    return {
+      style: event.temporary
+        ? {
+            backgroundColor: '#909090',
+            border: '2px dashed black'
+          }
+        : {}
+    };
+  };
+
+  // Get the states of the room buttons at the top.
   const [buttonStates, setButtonStates] = useState({
     1: false,
     2: false,
@@ -81,33 +91,41 @@ const ReservationCalendarView = (props: IReservationCalendarStateProp) => {
     7: false
   });
 
-  const clearTemporaryEvents = () => {
-    setEventList(oldEventList =>
-      oldEventList.filter(event => {
-        return !('temporary' in event);
-      })
-    );
-  };
-
+  // Create setters for each button.
   const setButtonState = key => setter => {
     setButtonStates(oldState => ({ ...oldState, [key]: setter(oldState[key]) }));
-    clearTemporaryEvents();
+    // Clear the temporary event.
+    setTemporaryEvent({});
   };
 
+  // Is at least one button selected?
   const hasSelected = () => Object.values(buttonStates).some(element => element);
 
+  // Call this when an existing event is selected.
   const handleSelectEvent = event => alert(event.title);
 
+  // Call this when a new event is created by click-and-drag.
   const handleSelectSlot = ({ start, end }) => {
-    clearTemporaryEvents();
+    setTemporaryEvent({});
+    // Temporary debug call.
+    // tslint:disable-next-line:no-console
+    console.log(Object.keys(buttonStates).filter(key => buttonStates[key]));
     const newEvent = {
       id: 1,
+      title: 'Your New Reservation',
+      allDay: false,
       start,
       end,
-      title: 'Your New Reservation',
+      desc: 'Click "Submit" to finalize',
+      facilities: [],
       temporary: true
     };
-    setEventList(oldEvents => [...oldEvents, newEvent]);
+
+    props.newReservation = {
+      startTime: start,
+      endTime: end
+    };
+    setTemporaryEvent(newEvent);
   };
 
   return (
@@ -135,7 +153,7 @@ const ReservationCalendarView = (props: IReservationCalendarStateProp) => {
         <Calendar
           selectable
           localizer={localizer}
-          events={eventList}
+          events={fullEventList()}
           onSelectEvent={handleSelectEvent}
           onSelectSlot={handleSelectSlot}
           views={{ week: true }}
@@ -143,18 +161,36 @@ const ReservationCalendarView = (props: IReservationCalendarStateProp) => {
           startAccessor="start"
           endAccessor="end"
           showMultiDayTimes
+          eventPropGetter={getEventProperties}
           defaultDate={new Date()}
         />
+      </div>
+      <div>
+        <Link
+          to={`/reservation/form`}
+          className={`btn btn-primary ${hasSelected() ? '' : 'disabled'} float-right jh-create-entity`}
+          id="jh-create-entity"
+        >
+          Create Reservation
+        </Link>
       </div>
     </div>
   );
 };
 
 const mapStateToProps = ({ reservation }: IRootState) => ({
-  reservationList: reservation.entities,
-  getEntities
+  reservationList: reservation.entities, // Existing entities.
+  newReservation: reservation.entity // New entity being created.
 });
 
-type StateProps = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = {
+  getEntities
+};
 
-export default connect(mapStateToProps)(ReservationCalendarView);
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReservationCalendarView);

@@ -9,7 +9,7 @@ import PasswordResetInit from 'app/modules/account/password-reset/init/password-
 import PasswordResetFinish from 'app/modules/account/password-reset/finish/password-reset-finish';
 import Logout from 'app/modules/login/logout';
 import ReservationCalendarView from 'app/modules/reservation_calendar/reservation_calendar';
-import CalendarView from 'app/modules/calendar/calendar';
+import ReservationFormView from 'app/modules/reservation_form/reservation_form';
 import Home from 'app/modules/home/home';
 import Entities from 'app/entities';
 import PrivateRoute from 'app/shared/auth/private-route';
@@ -43,7 +43,8 @@ const Routes = () => (
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
-      <ErrorBoundaryRoute path="/calendar" component={ReservationCalendarView} />
+      <ErrorBoundaryRoute path="/reservation/calendar" component={ReservationCalendarView} />
+      <ErrorBoundaryRoute path="/reservation/form" component={ReservationFormView} />
       <ErrorBoundaryRoute path="/" exact component={Home} />
       <ErrorBoundaryRoute component={PageNotFound} />
     </Switch>

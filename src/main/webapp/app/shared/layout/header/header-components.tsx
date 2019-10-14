@@ -36,10 +36,8 @@ export const SignInButton = props =>
   );
 export const Calendar = props => (
   <NavItem>
-    <NavLink tag={Link} to="/calendar" className="d-flex align-items-center">
-      <span>
-        <Translate contentKey="global.menu.calendar">Calendar</Translate>
-      </span>
+    <NavLink tag={Link} to="/reservation/calendar" className="d-flex align-items-center">
+      <span>Create Reservation</span>
     </NavLink>
   </NavItem>
 );
