@@ -79,6 +79,13 @@
             <column name="end_time" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
+        <loadData
+                file="config/liquibase/fake-data/reservation_facilities.csv"
+                separator=";"
+                tableName="reservation_facilities">
+            <column name="facilities_id" type="numeric"/>
+            <column name="reservation_id" type="numeric"/>
+        </loadData>
     </changeSet>
 
 </databaseChangeLog>
