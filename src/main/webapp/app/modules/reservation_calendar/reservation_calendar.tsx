@@ -56,17 +56,38 @@ export const ReservationCalendarView: React.FC<Props> = props => {
         start: convertDateTimeToServer(reservation.startTime),
         end: convertDateTimeToServer(reservation.endTime),
         desc: `${reservation.estimatedParticipants} participants`,
-        facilities: reservation.facilities,
+        facilities: [1], // reservation.facilities
         temporary: false
       };
     });
   };
 
+  const defaultTemporaryEvent = {
+    id: 9999,
+    facilities: [],
+    temporary: true,
+    start: null,
+    end: null
+  };
+
   // State stores.
   const [eventList, setEventList] = useState(generateEventList());
-  const [temporaryEvent, setTemporaryEvent] = useState(null);
+  const [temporaryEvent, setTemporaryEvent] = useState(defaultTemporaryEvent);
+
+  const clearTemporaryEvent = () => {
+    setTemporaryEvent(defaultTemporaryEvent);
+  };
 
   const fullEventList = () => [...eventList, temporaryEvent];
+
+  const filteredEventList = () =>
+    eventList.filter(event => {
+      return (
+        event.facilities.filter(value => {
+          return getSelectedFacilities().includes(value.toString());
+        }).length !== 0
+      );
+    });
 
   // Get the properties placed on each event.
   const getEventProperties = (event, start, end, isSelected) => {
@@ -95,37 +116,48 @@ export const ReservationCalendarView: React.FC<Props> = props => {
   const setButtonState = key => setter => {
     setButtonStates(oldState => ({ ...oldState, [key]: setter(oldState[key]) }));
     // Clear the temporary event.
-    setTemporaryEvent({});
+    clearTemporaryEvent();
   };
 
   // Is at least one button selected?
-  const hasSelected = () => Object.values(buttonStates).some(element => element);
+  const hasSelectedFacilities = () => Object.values(buttonStates).some(element => element);
+
+  const getSelectedFacilities = () => Object.keys(buttonStates).filter(index => buttonStates[index]);
 
   // Call this when an existing event is selected.
   const handleSelectEvent = event => alert(event.title);
 
+  const doesEventOverlap = (start, end) => {
+    // Return true if there is at least one event which overlaps.
+    return (
+      filteredEventList().filter(event => (event.start <= start && start <= event.end) || (event.start <= end && end <= event.end))
+        .length !== 0
+    );
+  };
+
   // Call this when a new event is created by click-and-drag.
   const handleSelectSlot = ({ start, end }) => {
-    setTemporaryEvent({});
-    // Temporary debug call.
-    // tslint:disable-next-line:no-console
-    console.log(Object.keys(buttonStates).filter(key => buttonStates[key]));
-    const newEvent = {
-      id: 1,
-      title: 'Your New Reservation',
-      allDay: false,
-      start,
-      end,
-      desc: 'Click "Submit" to finalize',
-      facilities: [],
-      temporary: true
-    };
+    if (!doesEventOverlap(start, end)) {
+      clearTemporaryEvent();
+      const newEvent = {
+        id: 1,
+        title: 'Your New Reservation',
+        allDay: false,
+        start,
+        end,
+        desc: 'Click "Submit" to finalize',
+        facilities: getSelectedFacilities(),
+        temporary: true
+      };
+      setTemporaryEvent(newEvent);
+      // TODO: Allow Taylor to access the data entered here (via Redux?)
+    }
+  };
 
-    props.newReservation = {
-      startTime: start,
-      endTime: end
-    };
-    setTemporaryEvent(newEvent);
+  const today = new Date();
+
+  const onNavigate = () => {
+    // Prevent moving to old dates.
   };
 
   return (
@@ -146,29 +178,31 @@ export const ReservationCalendarView: React.FC<Props> = props => {
         </div>
       </div>
       <div className="reservation-calendar-wrapper">
-        <div className={`reservation-calendar-overlay reservation-calendar-overlay-${hasSelected() ? 'enabled' : 'disabled'}`}>
+        <div className={`reservation-calendar-overlay reservation-calendar-overlay-${hasSelectedFacilities() ? 'enabled' : 'disabled'}`}>
           Please choose one or more room(s) to reserve.
         </div>
         <div className="reservation-calender-subtitle">Click and drag to select a time for your reservation.</div>
         <Calendar
           selectable
           localizer={localizer}
-          events={fullEventList()}
+          events={[...filteredEventList(), temporaryEvent]}
           onSelectEvent={handleSelectEvent}
           onSelectSlot={handleSelectSlot}
           views={{ week: true }}
           defaultView="week"
           startAccessor="start"
           endAccessor="end"
+          min={new Date(1900, 1, 1, 9, 0)}
+          max={new Date(1900, 1, 1, 21, 0)}
           showMultiDayTimes
           eventPropGetter={getEventProperties}
-          defaultDate={new Date()}
+          defaultDate={today}
         />
       </div>
       <div>
         <Link
           to={`/reservation/form`}
-          className={`btn btn-primary ${hasSelected() ? '' : 'disabled'} float-right jh-create-entity`}
+          className={`btn btn-primary ${hasSelectedFacilities() ? '' : 'disabled'} float-right jh-create-entity`}
           id="jh-create-entity"
         >
           Create Reservation
