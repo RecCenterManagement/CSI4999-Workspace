@@ -53,6 +53,10 @@ public class Reservation implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "facilities_id", referencedColumnName = "id"))
     private Set<Facility> facilities = new HashSet<>();
 
+    @OneToMany(mappedBy = "reservation")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<EquipmentReservation> equipmentReservations = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -150,6 +154,31 @@ public class Reservation implements Serializable {
 
     public void setFacilities(Set<Facility> facilities) {
         this.facilities = facilities;
+    }
+
+    public Set<EquipmentReservation> getEquipmentReservations() {
+        return equipmentReservations;
+    }
+
+    public Reservation equipmentReservations(Set<EquipmentReservation> equipmentReservations) {
+        this.equipmentReservations = equipmentReservations;
+        return this;
+    }
+
+    public Reservation addEquipmentReservations(EquipmentReservation equipmentReservation) {
+        this.equipmentReservations.add(equipmentReservation);
+        equipmentReservation.setReservation(this);
+        return this;
+    }
+
+    public Reservation removeEquipmentReservations(EquipmentReservation equipmentReservation) {
+        this.equipmentReservations.remove(equipmentReservation);
+        equipmentReservation.setReservation(null);
+        return this;
+    }
+
+    public void setEquipmentReservations(Set<EquipmentReservation> equipmentReservations) {
+        this.equipmentReservations = equipmentReservations;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

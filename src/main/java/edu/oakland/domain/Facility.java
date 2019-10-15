@@ -29,6 +29,30 @@ public class Facility implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "footage", nullable = false)
+    private Integer footage;
+
+    @Min(value = 0)
+    @Column(name = "capacity")
+    private Integer capacity;
+
+    @Size(max = 180)
+    @Column(name = "av_support", length = 180)
+    private String avSupport;
+
+    @NotNull
+    @Column(name = "food_allowed", nullable = false)
+    private Boolean foodAllowed;
+
+    @Column(name = "color_code")
+    private String colorCode;
+
+    @Size(max = 1000)
+    @Column(name = "description", length = 1000)
+    private String description;
+
     @ManyToMany(mappedBy = "facilities")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
@@ -54,6 +78,84 @@ public class Facility implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getFootage() {
+        return footage;
+    }
+
+    public Facility footage(Integer footage) {
+        this.footage = footage;
+        return this;
+    }
+
+    public void setFootage(Integer footage) {
+        this.footage = footage;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public Facility capacity(Integer capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getAvSupport() {
+        return avSupport;
+    }
+
+    public Facility avSupport(String avSupport) {
+        this.avSupport = avSupport;
+        return this;
+    }
+
+    public void setAvSupport(String avSupport) {
+        this.avSupport = avSupport;
+    }
+
+    public Boolean isFoodAllowed() {
+        return foodAllowed;
+    }
+
+    public Facility foodAllowed(Boolean foodAllowed) {
+        this.foodAllowed = foodAllowed;
+        return this;
+    }
+
+    public void setFoodAllowed(Boolean foodAllowed) {
+        this.foodAllowed = foodAllowed;
+    }
+
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public Facility colorCode(String colorCode) {
+        this.colorCode = colorCode;
+        return this;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Facility description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Reservation> getReservations() {
@@ -103,6 +205,12 @@ public class Facility implements Serializable {
         return "Facility{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", footage=" + getFootage() +
+            ", capacity=" + getCapacity() +
+            ", avSupport='" + getAvSupport() + "'" +
+            ", foodAllowed='" + isFoodAllowed() + "'" +
+            ", colorCode='" + getColorCode() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

@@ -24,6 +24,15 @@ import facility, {
 import reservation, {
   ReservationState
 } from 'app/entities/reservation/reservation.reducer';
+// prettier-ignore
+import equipment, {
+  EquipmentState
+} from 'app/entities/equipment/equipment.reducer';
+// prettier-ignore
+import equipmentReservation, {
+  EquipmentReservationState
+} from 'app/entities/equipment-reservation/equipment-reservation.reducer';
+// prettier-ignore
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -40,6 +49,8 @@ export interface IRootState {
   readonly profilePicture: ProfilePictureState;
   readonly facility: FacilityState;
   readonly reservation: ReservationState;
+  readonly equipment: EquipmentState;
+  readonly equipmentReservation: EquipmentReservationState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -58,6 +69,8 @@ const rootReducer = combineReducers<IRootState>({
   profilePicture,
   facility,
   reservation,
+  equipment,
+  equipmentReservation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

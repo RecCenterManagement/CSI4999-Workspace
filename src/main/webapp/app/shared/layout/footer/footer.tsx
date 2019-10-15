@@ -13,7 +13,24 @@ const Footer = props => (
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow className="py-4 d-flex align-items-center">
           <MDBCol md="6" lg="5" className="text-center text-md-left mb-4 mb-md-0">
-            <img src="" className="img-fluid" alt="" />
+            <img src="../../../content/images/Oakland_University_logo.png" width="200" className="img-fluid" alt="" />
+          </MDBCol>
+          <MDBCol md="6" lg="6" className="text-center text-md-left">
+            <a href="tel:248-370-2100">
+              <i className="fa fa-phone mr-3" /> (248) 370-2100&emsp; | &emsp;&emsp;
+            </a>
+            <a href="https://oupolice.com/addresses/lookup/">
+              <i className="fa fa-home mr-3" />
+              Address Lookup&emsp; | &emsp;&emsp;
+            </a>
+            <a href="https://map.concept3d.com/?id=566#!ct/6600,5468,0,43591,43593,43596,43598,43643">
+              <i className="fa fa-map mr-3" />
+              Campus Map&emsp; | &emsp;&emsp;
+            </a>
+            <a href="https://www.oakland.edu/contact-ou/">
+              <i className="fa fa-mail-bulk mr-3" />
+              Contact OU
+            </a>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
@@ -24,136 +41,173 @@ const Footer = props => (
           <h6 className="text-uppercase font-weight-bold">
             <strong>Recreation Center</strong>
           </h6>
-          <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px' }} />
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '160px' }} />
           <p>
             The Mission of University Recreation and Well-Being is to offer programs, services and facilities that foster student
             development, create a connection to Oakland University and motivate our community toward a life-long commitment of well-being.
           </p>
+          <h6 className="text-uppercase font-weight-bold">
+            <strong>Contact OU Rec Center</strong>
+          </h6>
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '200px' }} />
+          <p>
+            <a href="https://www.google.com/maps/place/569+Pioneer+Dr,+Rochester,+MI+48309/">
+              <i className="fa fa-home mr-3" /> 569 Pioneer Drive <br />
+              &emsp;&emsp;&ensp;Rochester, MI 48309-4482, US
+            </a>
+          </p>
+          <p>
+            <a href="mailto:rec@oakland.edu">
+              <i className="fa fa-envelope mr-3" /> rec@oakland.edu
+            </a>
+          </p>
+          <p>
+            <a href="tel:248-370-4732">
+              <i className="fa fa-phone mr-3" /> (248) 370-4REC (4732)
+            </a>
+          </p>
+          <p>
+            <a href="#!">
+              <i className="fa fa-fax mr-3" /> (248) 370-4889
+            </a>
+          </p>
         </MDBCol>
-        <MDBCol md="2" lg="2" xl="2" className="mb-4">
+        <MDBCol md="3" lg="2" xl="2" className="mb-4">
           <h6 className="text-uppercase font-weight-bold">
             <strong>Academics</strong>
           </h6>
-          <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px' }} />
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '90px' }} />
           <p>
-            <a href="#!">Arts and Sciences</a>
+            <a href="https://www.oakland.edu/cas/">Arts and Sciences</a>
           </p>
           <p>
-            <a href="#!">Business Administration</a>
+            <a href="https://www.oakland.edu/business/">Business Administration</a>
           </p>
           <p>
-            <a href="#!">Education and Human Services</a>
+            <a href="https://www.oakland.edu/sehs/">Education and Human Services</a>
           </p>
           <p>
-            <a href="#!">Engineering and Computer Science</a>
+            <a href="https://www.oakland.edu/secs/">Engineering and Computer Science</a>
           </p>
           <p>
-            <a href="#!">Health Sciences</a>
+            <a href="https://www.oakland.edu/grad/">Graduate School</a>
           </p>
           <p>
-            <a href="#!">Nursing</a>
+            <a href="https://www.oakland.edu/shs/">Health Sciences</a>
           </p>
           <p>
-            <a href="#!">OUWB School of Medicine</a>
+            <a href="https://www.oakland.edu/hc/">Honors College</a>
           </p>
           <p>
-            <a href="#!">Graduate School</a>
+            <a href="https://www.oakland.edu/bis/">Integrative Studies</a>
           </p>
           <p>
-            <a href="#!">Honors College</a>
+            <a href="https://www.oakland.edu/nursing/">Nursing</a>
           </p>
           <p>
-            <a href="#!">Integrative Studies</a>
+            <a href="https://www.oakland.edu/medicine/">OUWB School of Medicine</a>
           </p>
         </MDBCol>
         <MDBCol md="3" lg="2" xl="2" className="mb-4">
           <h6 className="text-uppercase font-weight-bold">
             <strong>Info For</strong>
           </h6>
-          <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px' }} />
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '75px' }} />
           <p>
-            <a href="#!">Alumni</a>
+            <a href="https://www.oakland.edu/alumni/">Alumni</a>
           </p>
           <p>
-            <a href="#!">Current Students</a>
+            <a href="https://www.oakland.edu/students/">Current Students</a>
           </p>
           <p>
-            <a href="#!">Donors</a>
+            <a href="https://www.oakland.edu/giving/">Donors</a>
           </p>
           <p>
-            <a href="#!">Faculty and Staff</a>
+            <a href="https://www.oakland.edu/faculty-and-staff/">Faculty and Staff</a>
           </p>
           <p>
-            <a href="#!">Future Graduate Students</a>
+            <a href="https://www.oakland.edu/grad/">Future Graduate Students</a>
           </p>
           <p>
-            <a href="#!">Future Undergraduate Students</a>
+            <a href="https://www.oakland.edu/futurestudents/">Future Undergraduate Students</a>
           </p>
           <p>
-            <a href="#!">Mission and Vision</a>
+            <a href="https://www.oakland.edu/about/ou-mission-and-vision/">Mission and Vision</a>
           </p>
           <p>
-            <a href="#!">Strategic Plan</a>
+            <a href="https://www.oakland.edu/president/strategic-planning/">Strategic Plan</a>
           </p>
         </MDBCol>
         <MDBCol md="3" lg="2" xl="2" className="mb-4">
           <h6 className="text-uppercase font-weight-bold">
             <strong>Quick Links</strong>
           </h6>
-          <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px' }} />
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '100px' }} />
           <p>
-            <a href="#!">About OU</a>
+            <a href="https://www.oakland.edu/about/">About OU</a>
           </p>
           <p>
-            <a href="#!">Community Engagement</a>
+            <a href="https://www.oakland.edu/community/">Community Engagement</a>
           </p>
           <p>
-            <a href="#!">Directory</a>
+            <a href="https://sail.oakland.edu/PROD/bwpkedir.P_DisplayDirectory">Directory</a>
           </p>
           <p>
-            <a href="#!">Diversity, Equity, and Inclusion</a>
+            <a href="https://www.oakland.edu/diversity/">Diversity, Equity, and Inclusion</a>
           </p>
           <p>
-            <a href="#!">Eye Research Institute</a>
+            <a href="https://www.oakland.edu/eri/">Eye Research Institute</a>
           </p>
           <p>
-            <a href="#!">Important Dates</a>
+            <a href="https://www.oakland.edu/registrar/important-dates/">Important Dates</a>
           </p>
           <p>
-            <a href="#!">Jobs at OU</a>
+            <a href="https://jobs.oakland.edu/">Jobs at OU</a>
           </p>
           <p>
-            <a href="#!">Macomb-OU Incubator</a>
+            <a href="https://www.oakland.edu/macombouinc/">Macomb-OU Incubator</a>
           </p>
           <p>
-            <a href="#!">Macomb Programs</a>
+            <a href="https://www.oakland.edu/macomb/">Macomb Programs</a>
           </p>
           <p>
-            <a href="#!">OU INC</a>
+            <a href="https://www.oakland.edu/ouinc/">OU INC</a>
           </p>
           <p>
-            <a href="#!">University Offices</a>
+            <a href="https://www.oakland.edu/universityoffices/">University Offices</a>
           </p>
           <p>
             <a href="#!">Webmaster</a>
           </p>
         </MDBCol>
-        <MDBCol md="4" lg="3" xl="3" className="mb-4">
+        <MDBCol md="3" lg="2" xl="2" className="mb-4">
           <h6 className="text-uppercase font-weight-bold">
-            <strong>Contact</strong>
+            <strong>Legal</strong>
           </h6>
-          <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px' }} />
+          <hr className="brown accent-3 mb-4 mt-0 d-inline-block mx-auto" style={{ width: '100px' }} />
           <p>
-            <i className="fa fa-home mr-3" /> Rochester, MI 48309-4482, US
+            <a href="https://oupolice.com/clery/">Campus Safety</a>
           </p>
           <p>
-            <i className="fa fa-envelope mr-3" /> rec@oakland.edu
+            <a href="https://www.oakland.edu/consumer-information/">Consumer Information</a>
           </p>
           <p>
-            <i className="fa fa-phone mr-3" /> (248) 370-4REC (4732)
+            <a href="https://www.oakland.edu/policies-regulations/dmca/">DMCA Notice</a>
           </p>
           <p>
-            <i className="fa fa-print mr-3" /> (248) 370-4889
+            <a href="https://oupolice.com/em/">Emergency Preparedness</a>
+          </p>
+          <p>
+            <a href="https://www.oakland.edu/gdpr/">GDPR Privacy Notice</a>
+          </p>
+          <p>
+            <a href="https://www.oakland.edu/hlc-reaffirmation/">HLC Reaffirmation</a>
+          </p>
+          <p>
+            <a href="https://www.oakland.edu/policies/">Policies and Regulations</a>
+          </p>
+          <p>
+            <a href="https://www.oakland.edu/policies-regulations/web-privacy/">Privacy Statement</a>
           </p>
         </MDBCol>
       </MDBRow>
@@ -162,20 +216,26 @@ const Footer = props => (
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow className="py-4 d-flex align-items-center">
           <MDBCol md="6" lg="5" className="text-center text-md-left mb-4 mb-md-0">
-            <h6 className="mb-0 white-text">Stay connected with us!</h6>
+            <h6 className="mb-0 white-text font-weight-bold">Stay connected with us!</h6>
           </MDBCol>
           <MDBCol md="6" lg="7" className="text-center text-md-right">
-            <a className="fb-ic ml-0">
+            &copy; {new Date().getFullYear()} Copyright: <a href="https://www.oakland.edu/"> Oakland University </a>
+          </MDBCol>
+          <MDBCol md="6" lg="7" className="text-center text-md-right">
+            <a className="fb-ic ml-0" href="https://www.facebook.com/ourecwell">
               <i className="fab fa-facebook-f blue-text mr-lg-4" />
             </a>
-            <a className="tw-ic">
+            <a className="tw-ic" href="https://twitter.com/OURecWell">
               <i className="fab fa-twitter light-blue-text mr-lg-4" />
             </a>
-            <a className="li-ic">
-              <i className="fab fa-linkedin-in white-text mr-lg-4" />
+            <a className="yt-ic" href="https://www.youtube.com/user/OUCampusRecreation">
+              <i className="fab fa-youtube red-text mr-lg-4" />
             </a>
-            <a className="ins-ic">
+            <a className="ins-ic" href="https://www.instagram.com/ourecwell/">
               <i className="fab fa-instagram pink-text mr-lg-4" />
+            </a>
+            <a className="wp-ic" href="https://ourecwell.wordpress.com/">
+              <i className="fab fa-wordpress black-text mr-lg-4" />
             </a>
           </MDBCol>
         </MDBRow>

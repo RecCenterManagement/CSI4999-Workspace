@@ -105,6 +105,10 @@ public class ReservationQueryService extends QueryService<Reservation> {
                 specification = specification.and(buildSpecification(criteria.getFacilitiesId(),
                     root -> root.join(Reservation_.facilities, JoinType.LEFT).get(Facility_.id)));
             }
+            if (criteria.getEquipmentReservationsId() != null) {
+                specification = specification.and(buildSpecification(criteria.getEquipmentReservationsId(),
+                    root -> root.join(Reservation_.equipmentReservations, JoinType.LEFT).get(EquipmentReservation_.id)));
+            }
         }
         return specification;
     }

@@ -1,5 +1,4 @@
 package edu.oakland.repository;
-
 import edu.oakland.domain.Facility;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

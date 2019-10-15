@@ -6,7 +6,8 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-
+    <property name="now" value="now()" dbms="h2"/>
+    
     <!--
         Added the entity Facility.
     -->
@@ -17,6 +18,30 @@
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_facility_name" />
+            </column>
+
+            <column name="footage" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="capacity" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="av_support" type="varchar(180)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="food_allowed" type="boolean">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="color_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="description" type="varchar(1000)">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -44,6 +69,12 @@
                   tableName="facility">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
+            <column name="footage" type="numeric"/>
+            <column name="capacity" type="numeric"/>
+            <column name="av_support" type="string"/>
+            <column name="food_allowed" type="boolean"/>
+            <column name="color_code" type="string"/>
+            <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

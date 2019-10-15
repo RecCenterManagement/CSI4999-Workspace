@@ -2,14 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-// tslint:disable-next-line:no-unused-variable
 import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
-// tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IFacilityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -34,6 +32,42 @@ export class FacilityDetail extends React.Component<IFacilityDetailProps> {
               </span>
             </dt>
             <dd>{facilityEntity.name}</dd>
+            <dt>
+              <span id="footage">
+                <Translate contentKey="recCenterManagementApp.facility.footage">Footage</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.footage}</dd>
+            <dt>
+              <span id="capacity">
+                <Translate contentKey="recCenterManagementApp.facility.capacity">Capacity</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.capacity}</dd>
+            <dt>
+              <span id="avSupport">
+                <Translate contentKey="recCenterManagementApp.facility.avSupport">Av Support</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.avSupport}</dd>
+            <dt>
+              <span id="foodAllowed">
+                <Translate contentKey="recCenterManagementApp.facility.foodAllowed">Food Allowed</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.foodAllowed ? 'true' : 'false'}</dd>
+            <dt>
+              <span id="colorCode">
+                <Translate contentKey="recCenterManagementApp.facility.colorCode">Color Code</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.colorCode}</dd>
+            <dt>
+              <span id="description">
+                <Translate contentKey="recCenterManagementApp.facility.description">Description</Translate>
+              </span>
+            </dt>
+            <dd>{facilityEntity.description}</dd>
           </dl>
           <Button tag={Link} to="/entity/facility" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
