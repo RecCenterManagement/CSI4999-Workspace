@@ -43,6 +43,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import edu.oakland.domain.enumeration.ReservationStatus;
 /**
  * Integration tests for the {@link ReservationResource} REST controller.
  */
@@ -63,6 +64,9 @@ public class ReservationResourceIT {
     private static final ZonedDateTime DEFAULT_END_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_END_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_END_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
+    private static final ReservationStatus DEFAULT_STATUS = ReservationStatus.APPROVED;
+    private static final ReservationStatus UPDATED_STATUS = ReservationStatus.DENIED;
 
     @Autowired
     private ReservationRepository reservationRepository;
@@ -121,7 +125,8 @@ public class ReservationResourceIT {
             .event(DEFAULT_EVENT)
             .estimatedParticipants(DEFAULT_ESTIMATED_PARTICIPANTS)
             .startTime(DEFAULT_START_TIME)
-            .endTime(DEFAULT_END_TIME);
+            .endTime(DEFAULT_END_TIME)
+            .status(DEFAULT_STATUS);
         return reservation;
     }
     /**
@@ -135,7 +140,8 @@ public class ReservationResourceIT {
             .event(UPDATED_EVENT)
             .estimatedParticipants(UPDATED_ESTIMATED_PARTICIPANTS)
             .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME);
+            .endTime(UPDATED_END_TIME)
+            .status(UPDATED_STATUS);
         return reservation;
     }
 
@@ -163,6 +169,7 @@ public class ReservationResourceIT {
         assertThat(testReservation.getEstimatedParticipants()).isEqualTo(DEFAULT_ESTIMATED_PARTICIPANTS);
         assertThat(testReservation.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testReservation.getEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testReservation.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -259,6 +266,24 @@ public class ReservationResourceIT {
 
     @Test
     @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reservationRepository.findAll().size();
+        // set the field null
+        reservation.setStatus(null);
+
+        // Create the Reservation, which fails.
+
+        restReservationMockMvc.perform(post("/api/reservations")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(reservation)))
+            .andExpect(status().isBadRequest());
+
+        List<Reservation> reservationList = reservationRepository.findAll();
+        assertThat(reservationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllReservations() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);
@@ -268,10 +293,11 @@ public class ReservationResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reservation.getId().intValue())))
-            .andExpect(jsonPath("$.[*].event").value(hasItem(DEFAULT_EVENT.toString())))
+            .andExpect(jsonPath("$.[*].event").value(hasItem(DEFAULT_EVENT)))
             .andExpect(jsonPath("$.[*].estimatedParticipants").value(hasItem(DEFAULT_ESTIMATED_PARTICIPANTS)))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(sameInstant(DEFAULT_START_TIME))))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))));
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -318,10 +344,11 @@ public class ReservationResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(reservation.getId().intValue()))
-            .andExpect(jsonPath("$.event").value(DEFAULT_EVENT.toString()))
+            .andExpect(jsonPath("$.event").value(DEFAULT_EVENT))
             .andExpect(jsonPath("$.estimatedParticipants").value(DEFAULT_ESTIMATED_PARTICIPANTS))
             .andExpect(jsonPath("$.startTime").value(sameInstant(DEFAULT_START_TIME)))
-            .andExpect(jsonPath("$.endTime").value(sameInstant(DEFAULT_END_TIME)));
+            .andExpect(jsonPath("$.endTime").value(sameInstant(DEFAULT_END_TIME)))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -335,6 +362,19 @@ public class ReservationResourceIT {
 
         // Get all the reservationList where event equals to UPDATED_EVENT
         defaultReservationShouldNotBeFound("event.equals=" + UPDATED_EVENT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByEventIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where event not equals to DEFAULT_EVENT
+        defaultReservationShouldNotBeFound("event.notEquals=" + DEFAULT_EVENT);
+
+        // Get all the reservationList where event not equals to UPDATED_EVENT
+        defaultReservationShouldBeFound("event.notEquals=" + UPDATED_EVENT);
     }
 
     @Test
@@ -362,6 +402,32 @@ public class ReservationResourceIT {
         // Get all the reservationList where event is null
         defaultReservationShouldNotBeFound("event.specified=false");
     }
+                @Test
+    @Transactional
+    public void getAllReservationsByEventContainsSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where event contains DEFAULT_EVENT
+        defaultReservationShouldBeFound("event.contains=" + DEFAULT_EVENT);
+
+        // Get all the reservationList where event contains UPDATED_EVENT
+        defaultReservationShouldNotBeFound("event.contains=" + UPDATED_EVENT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByEventNotContainsSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where event does not contain DEFAULT_EVENT
+        defaultReservationShouldNotBeFound("event.doesNotContain=" + DEFAULT_EVENT);
+
+        // Get all the reservationList where event does not contain UPDATED_EVENT
+        defaultReservationShouldBeFound("event.doesNotContain=" + UPDATED_EVENT);
+    }
+
 
     @Test
     @Transactional
@@ -374,6 +440,19 @@ public class ReservationResourceIT {
 
         // Get all the reservationList where estimatedParticipants equals to UPDATED_ESTIMATED_PARTICIPANTS
         defaultReservationShouldNotBeFound("estimatedParticipants.equals=" + UPDATED_ESTIMATED_PARTICIPANTS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByEstimatedParticipantsIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where estimatedParticipants not equals to DEFAULT_ESTIMATED_PARTICIPANTS
+        defaultReservationShouldNotBeFound("estimatedParticipants.notEquals=" + DEFAULT_ESTIMATED_PARTICIPANTS);
+
+        // Get all the reservationList where estimatedParticipants not equals to UPDATED_ESTIMATED_PARTICIPANTS
+        defaultReservationShouldBeFound("estimatedParticipants.notEquals=" + UPDATED_ESTIMATED_PARTICIPANTS);
     }
 
     @Test
@@ -470,6 +549,19 @@ public class ReservationResourceIT {
 
     @Test
     @Transactional
+    public void getAllReservationsByStartTimeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where startTime not equals to DEFAULT_START_TIME
+        defaultReservationShouldNotBeFound("startTime.notEquals=" + DEFAULT_START_TIME);
+
+        // Get all the reservationList where startTime not equals to UPDATED_START_TIME
+        defaultReservationShouldBeFound("startTime.notEquals=" + UPDATED_START_TIME);
+    }
+
+    @Test
+    @Transactional
     public void getAllReservationsByStartTimeIsInShouldWork() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);
@@ -562,6 +654,19 @@ public class ReservationResourceIT {
 
     @Test
     @Transactional
+    public void getAllReservationsByEndTimeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where endTime not equals to DEFAULT_END_TIME
+        defaultReservationShouldNotBeFound("endTime.notEquals=" + DEFAULT_END_TIME);
+
+        // Get all the reservationList where endTime not equals to UPDATED_END_TIME
+        defaultReservationShouldBeFound("endTime.notEquals=" + UPDATED_END_TIME);
+    }
+
+    @Test
+    @Transactional
     public void getAllReservationsByEndTimeIsInShouldWork() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);
@@ -641,6 +746,58 @@ public class ReservationResourceIT {
 
     @Test
     @Transactional
+    public void getAllReservationsByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where status equals to DEFAULT_STATUS
+        defaultReservationShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the reservationList where status equals to UPDATED_STATUS
+        defaultReservationShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByStatusIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where status not equals to DEFAULT_STATUS
+        defaultReservationShouldNotBeFound("status.notEquals=" + DEFAULT_STATUS);
+
+        // Get all the reservationList where status not equals to UPDATED_STATUS
+        defaultReservationShouldBeFound("status.notEquals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultReservationShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the reservationList where status equals to UPDATED_STATUS
+        defaultReservationShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllReservationsByStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        reservationRepository.saveAndFlush(reservation);
+
+        // Get all the reservationList where status is not null
+        defaultReservationShouldBeFound("status.specified=true");
+
+        // Get all the reservationList where status is null
+        defaultReservationShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllReservationsByUserIsEqualToSomething() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);
@@ -709,7 +866,8 @@ public class ReservationResourceIT {
             .andExpect(jsonPath("$.[*].event").value(hasItem(DEFAULT_EVENT)))
             .andExpect(jsonPath("$.[*].estimatedParticipants").value(hasItem(DEFAULT_ESTIMATED_PARTICIPANTS)))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(sameInstant(DEFAULT_START_TIME))))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))));
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
 
         // Check, that the count call also returns 1
         restReservationMockMvc.perform(get("/api/reservations/count?sort=id,desc&" + filter))
@@ -760,7 +918,8 @@ public class ReservationResourceIT {
             .event(UPDATED_EVENT)
             .estimatedParticipants(UPDATED_ESTIMATED_PARTICIPANTS)
             .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME);
+            .endTime(UPDATED_END_TIME)
+            .status(UPDATED_STATUS);
 
         restReservationMockMvc.perform(put("/api/reservations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -775,6 +934,7 @@ public class ReservationResourceIT {
         assertThat(testReservation.getEstimatedParticipants()).isEqualTo(UPDATED_ESTIMATED_PARTICIPANTS);
         assertThat(testReservation.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testReservation.getEndTime()).isEqualTo(UPDATED_END_TIME);
+        assertThat(testReservation.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

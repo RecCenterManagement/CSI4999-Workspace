@@ -6,7 +6,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <property name="now" value="now()" dbms="h2"/>
     
     <!--
         Added the entity Reservation.
@@ -19,26 +18,23 @@
             <column name="event" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-
             <column name="estimated_participants" type="integer">
                 <constraints nullable="false" />
             </column>
-
             <column name="start_time" type="datetime">
                 <constraints nullable="false" />
             </column>
-
             <column name="end_time" type="datetime">
                 <constraints nullable="false" />
             </column>
-
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-
         <dropDefaultValue tableName="reservation" columnName="start_time" columnDataType="datetime"/>
         <dropDefaultValue tableName="reservation" columnName="end_time" columnDataType="datetime"/>
     </changeSet>
@@ -77,14 +73,8 @@
             <column name="estimated_participants" type="numeric"/>
             <column name="start_time" type="datetime"/>
             <column name="end_time" type="datetime"/>
+            <column name="status" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
-        </loadData>
-        <loadData
-                file="config/liquibase/fake-data/reservation_facilities.csv"
-                separator=";"
-                tableName="reservation_facilities">
-            <column name="facilities_id" type="numeric"/>
-            <column name="reservation_id" type="numeric"/>
         </loadData>
     </changeSet>
 
