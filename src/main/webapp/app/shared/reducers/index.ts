@@ -33,6 +33,14 @@ import equipmentReservation, {
   EquipmentReservationState
 } from 'app/entities/equipment-reservation/equipment-reservation.reducer';
 // prettier-ignore
+// prettier-ignore
+import equipmentBundle, {
+  EquipmentBundleState
+} from 'app/entities/equipment-bundle/equipment-bundle.reducer';
+// prettier-ignore
+import equipmentBundleClaim, {
+  EquipmentBundleClaimState
+} from 'app/entities/equipment-bundle-claim/equipment-bundle-claim.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -51,6 +59,8 @@ export interface IRootState {
   readonly reservation: ReservationState;
   readonly equipment: EquipmentState;
   readonly equipmentReservation: EquipmentReservationState;
+  readonly equipmentBundle: EquipmentBundleState;
+  readonly equipmentBundleClaim: EquipmentBundleClaimState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -71,6 +81,8 @@ const rootReducer = combineReducers<IRootState>({
   reservation,
   equipment,
   equipmentReservation,
+  equipmentBundle,
+  equipmentBundleClaim,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

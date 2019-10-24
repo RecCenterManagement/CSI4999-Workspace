@@ -12,6 +12,8 @@
         "reservation": "Reservation",
         "equipment": "Equipment",
         "equipmentReservation": "Equipment Reservation",
+        "equipmentBundle": "Equipment Bundle",
+        "equipmentBundleClaim": "Equipment Bundle Claim",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
