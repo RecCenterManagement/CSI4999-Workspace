@@ -39,7 +39,7 @@ public class EquipmentBundleClaim implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("equipmentReservations")
+    @JsonIgnoreProperties("claims")
     private EquipmentBundle equipmentBundle;
 
     @ManyToOne(optional = false)
