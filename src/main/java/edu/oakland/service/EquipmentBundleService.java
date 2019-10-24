@@ -34,6 +34,7 @@ public class EquipmentBundleService {
      */
     public EquipmentBundle save(EquipmentBundle equipmentBundle) {
         log.debug("Request to save EquipmentBundle : {}", equipmentBundle);
+        equipmentBundle.getClaims().forEach(claim -> claim.setEquipmentBundle(equipmentBundle));
         return equipmentBundleRepository.save(equipmentBundle);
     }
 
