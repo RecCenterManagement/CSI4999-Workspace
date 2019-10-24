@@ -29,7 +29,7 @@ public class EquipmentBundle implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "equipmentBundle")
+    @OneToMany(mappedBy = "equipmentBundle", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EquipmentBundleClaim> claims = new HashSet<>();
 
