@@ -163,6 +163,22 @@ export class ReservationUpdate extends React.Component<IReservationUpdateProps, 
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="statusLabel" for="reservation-status">
+                    <Translate contentKey="recCenterManagementApp.reservation.status">Status</Translate>
+                  </Label>
+                  <AvInput
+                    id="reservation-status"
+                    type="select"
+                    className="form-control"
+                    name="status"
+                    value={(!isNew && reservationEntity.status) || 'APPROVED'}
+                  >
+                    <option value="APPROVED">{translate('recCenterManagementApp.ReservationStatus.APPROVED')}</option>
+                    <option value="DENIED">{translate('recCenterManagementApp.ReservationStatus.DENIED')}</option>
+                    <option value="PENDING">{translate('recCenterManagementApp.ReservationStatus.PENDING')}</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="reservation-user">
                     <Translate contentKey="recCenterManagementApp.reservation.user">User</Translate>
                   </Label>

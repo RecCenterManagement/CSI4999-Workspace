@@ -20,6 +20,7 @@
       "estimatedParticipants": "Estimated Participants",
       "startTime": "Start Time",
       "endTime": "End Time",
+      "status": "Status",
       "user": "User",
       "facilities": "Facilities",
       "equipmentReservations": "Equipment Reservations"

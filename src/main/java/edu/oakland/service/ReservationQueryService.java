@@ -75,10 +75,10 @@ public class ReservationQueryService extends QueryService<Reservation> {
     }
 
     /**
-     * Function to convert ConsumerCriteria to a {@link Specification}
+     * Function to convert {@link ReservationCriteria} to a {@link Specification}
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
-     */    
+     */
     protected Specification<Reservation> createSpecification(ReservationCriteria criteria) {
         Specification<Reservation> specification = Specification.where(null);
         if (criteria != null) {
@@ -96,6 +96,9 @@ public class ReservationQueryService extends QueryService<Reservation> {
             }
             if (criteria.getEndTime() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getEndTime(), Reservation_.endTime));
+            }
+            if (criteria.getStatus() != null) {
+                specification = specification.and(buildSpecification(criteria.getStatus(), Reservation_.status));
             }
             if (criteria.getUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getUserId(),

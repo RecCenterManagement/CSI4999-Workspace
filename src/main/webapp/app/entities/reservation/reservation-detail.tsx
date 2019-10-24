@@ -55,6 +55,12 @@ export class ReservationDetail extends React.Component<IReservationDetailProps> 
               <TextFormat value={reservationEntity.endTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
+              <span id="status">
+                <Translate contentKey="recCenterManagementApp.reservation.status">Status</Translate>
+              </span>
+            </dt>
+            <dd>{reservationEntity.status}</dd>
+            <dt>
               <Translate contentKey="recCenterManagementApp.reservation.user">User</Translate>
             </dt>
             <dd>{reservationEntity.user ? reservationEntity.user.id : ''}</dd>

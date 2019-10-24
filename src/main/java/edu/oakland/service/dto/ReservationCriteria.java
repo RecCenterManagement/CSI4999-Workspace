@@ -3,6 +3,7 @@ package edu.oakland.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
+import edu.oakland.domain.enumeration.ReservationStatus;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
@@ -22,6 +23,24 @@ import io.github.jhipster.service.filter.ZonedDateTimeFilter;
  * fix type specific filters.
  */
 public class ReservationCriteria implements Serializable, Criteria {
+    /**
+     * Class for filtering ReservationStatus
+     */
+    public static class ReservationStatusFilter extends Filter<ReservationStatus> {
+
+        public ReservationStatusFilter() {
+        }
+
+        public ReservationStatusFilter(ReservationStatusFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public ReservationStatusFilter copy() {
+            return new ReservationStatusFilter(this);
+        }
+
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +53,8 @@ public class ReservationCriteria implements Serializable, Criteria {
     private ZonedDateTimeFilter startTime;
 
     private ZonedDateTimeFilter endTime;
+
+    private ReservationStatusFilter status;
 
     private LongFilter userId;
 
@@ -50,6 +71,7 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.estimatedParticipants = other.estimatedParticipants == null ? null : other.estimatedParticipants.copy();
         this.startTime = other.startTime == null ? null : other.startTime.copy();
         this.endTime = other.endTime == null ? null : other.endTime.copy();
+        this.status = other.status == null ? null : other.status.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.facilitiesId = other.facilitiesId == null ? null : other.facilitiesId.copy();
         this.equipmentReservationsId = other.equipmentReservationsId == null ? null : other.equipmentReservationsId.copy();
@@ -100,6 +122,14 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.endTime = endTime;
     }
 
+    public ReservationStatusFilter getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatusFilter status) {
+        this.status = status;
+    }
+
     public LongFilter getUserId() {
         return userId;
     }
@@ -140,6 +170,7 @@ public class ReservationCriteria implements Serializable, Criteria {
             Objects.equals(estimatedParticipants, that.estimatedParticipants) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
+            Objects.equals(status, that.status) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(facilitiesId, that.facilitiesId) &&
             Objects.equals(equipmentReservationsId, that.equipmentReservationsId);
@@ -153,6 +184,7 @@ public class ReservationCriteria implements Serializable, Criteria {
         estimatedParticipants,
         startTime,
         endTime,
+        status,
         userId,
         facilitiesId,
         equipmentReservationsId
@@ -167,6 +199,7 @@ public class ReservationCriteria implements Serializable, Criteria {
                 (estimatedParticipants != null ? "estimatedParticipants=" + estimatedParticipants + ", " : "") +
                 (startTime != null ? "startTime=" + startTime + ", " : "") +
                 (endTime != null ? "endTime=" + endTime + ", " : "") +
+                (status != null ? "status=" + status + ", " : "") +
                 (userId != null ? "userId=" + userId + ", " : "") +
                 (facilitiesId != null ? "facilitiesId=" + facilitiesId + ", " : "") +
                 (equipmentReservationsId != null ? "equipmentReservationsId=" + equipmentReservationsId + ", " : "") +

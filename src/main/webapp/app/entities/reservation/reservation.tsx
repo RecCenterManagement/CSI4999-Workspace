@@ -80,6 +80,9 @@ export class Reservation extends React.Component<IReservationProps, IReservation
                   <th className="hand" onClick={this.sort('endTime')}>
                     <Translate contentKey="recCenterManagementApp.reservation.endTime">End Time</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('status')}>
+                    <Translate contentKey="recCenterManagementApp.reservation.status">Status</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     <Translate contentKey="recCenterManagementApp.reservation.user">User</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -101,6 +104,9 @@ export class Reservation extends React.Component<IReservationProps, IReservation
                     </td>
                     <td>
                       <TextFormat type="date" value={reservation.endTime} format={APP_DATE_FORMAT} />
+                    </td>
+                    <td>
+                      <Translate contentKey={`recCenterManagementApp.ReservationStatus.${reservation.status}`} />
                     </td>
                     <td>{reservation.user ? reservation.user.id : ''}</td>
                     <td className="text-right">

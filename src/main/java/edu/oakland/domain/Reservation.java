@@ -11,6 +11,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.oakland.domain.enumeration.ReservationStatus;
+
 /**
  * A Reservation.
  */
@@ -41,6 +43,11 @@ public class Reservation implements Serializable {
     @NotNull
     @Column(name = "end_time", nullable = false)
     private ZonedDateTime endTime;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ReservationStatus status;
 
     @ManyToOne
     @JsonIgnoreProperties("reservations")
@@ -116,6 +123,19 @@ public class Reservation implements Serializable {
 
     public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
+    public Reservation status(ReservationStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
     }
 
     public User getUser() {
@@ -206,6 +226,7 @@ public class Reservation implements Serializable {
             ", estimatedParticipants=" + getEstimatedParticipants() +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

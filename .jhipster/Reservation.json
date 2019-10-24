@@ -52,6 +52,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "ReservationStatus",
+            "fieldValues": "APPROVED,DENIED,PENDING",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20190924230652",
