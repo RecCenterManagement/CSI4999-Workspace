@@ -5,6 +5,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class EquipmentBundle implements Serializable {
 
     @OneToMany(mappedBy = "equipmentBundle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnoreProperties("equipmentBundle")
     private Set<EquipmentBundleClaim> claims = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
