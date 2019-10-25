@@ -31,7 +31,7 @@ public class EquipmentBundle implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "equipmentBundle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "equipmentBundle", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true )
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties("equipmentBundle")
     private Set<EquipmentBundleClaim> claims = new HashSet<>();
