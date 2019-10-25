@@ -60,7 +60,7 @@ public class Reservation implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "facilities_id", referencedColumnName = "id"))
     private Set<Facility> facilities = new HashSet<>();
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<EquipmentReservation> equipmentReservations = new HashSet<>();
 
