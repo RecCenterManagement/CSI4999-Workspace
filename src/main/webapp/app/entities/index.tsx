@@ -9,6 +9,8 @@ import Facility from './facility';
 import Reservation from './reservation';
 import Equipment from './equipment';
 import EquipmentReservation from './equipment-reservation';
+import EquipmentBundle from './equipment-bundle';
+import EquipmentBundleClaim from './equipment-bundle-claim';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -20,6 +22,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/reservation`} component={Reservation} />
       <ErrorBoundaryRoute path={`${match.url}/equipment`} component={Equipment} />
       <ErrorBoundaryRoute path={`${match.url}/equipment-reservation`} component={EquipmentReservation} />
+      <ErrorBoundaryRoute path={`${match.url}/equipment-bundle`} component={EquipmentBundle} />
+      <ErrorBoundaryRoute path={`${match.url}/equipment-bundle-claim`} component={EquipmentBundleClaim} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

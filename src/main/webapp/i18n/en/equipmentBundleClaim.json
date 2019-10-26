@@ -1,0 +1,24 @@
+{
+  "recCenterManagementApp": {
+    "equipmentBundleClaim": {
+      "home": {
+        "title": "Equipment Bundle Claims",
+        "createLabel": "Create a new Equipment Bundle Claim",
+        "createOrEditLabel": "Create or edit a Equipment Bundle Claim",
+        "notFound": "No Equipment Bundle Claims found"
+      },
+      "created": "A new Equipment Bundle Claim is created with identifier {{ param }}",
+      "updated": "A Equipment Bundle Claim is updated with identifier {{ param }}",
+      "deleted": "A Equipment Bundle Claim is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Equipment Bundle Claim {{ id }}?"
+      },
+      "detail": {
+        "title": "Equipment Bundle Claim"
+      },
+      "count": "Count",
+      "equipmentBundle": "Equipment Bundle",
+      "equipment": "Equipment"
+    }
+  }
+}

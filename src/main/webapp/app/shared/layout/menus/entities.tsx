@@ -24,6 +24,12 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/entity/equipment-reservation">
       <Translate contentKey="global.menu.entities.equipmentReservation" />
     </MenuItem>
+    <MenuItem icon="asterisk" to="/entity/equipment-bundle">
+      <Translate contentKey="global.menu.entities.equipmentBundle" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/entity/equipment-bundle-claim">
+      <Translate contentKey="global.menu.entities.equipmentBundleClaim" />
+    </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );
