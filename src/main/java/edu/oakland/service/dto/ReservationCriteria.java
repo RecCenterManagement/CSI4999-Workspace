@@ -62,6 +62,8 @@ public class ReservationCriteria implements Serializable, Criteria {
 
     private LongFilter equipmentReservationsId;
 
+    private Boolean eagerFetch = false;
+
     public ReservationCriteria(){
     }
 
@@ -75,6 +77,7 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.userId = other.userId == null ? null : other.userId.copy();
         this.facilitiesId = other.facilitiesId == null ? null : other.facilitiesId.copy();
         this.equipmentReservationsId = other.equipmentReservationsId == null ? null : other.equipmentReservationsId.copy();
+        this.eagerFetch = other.eagerFetch == null ? null : new Boolean(other.eagerFetch);
     }
 
     @Override
@@ -154,6 +157,14 @@ public class ReservationCriteria implements Serializable, Criteria {
         this.equipmentReservationsId = equipmentReservationsId;
     }
 
+    public Boolean getEagerFetch() {
+        return eagerFetch;
+    }
+
+    public void setEagerFetch(Boolean eagerFetch) {
+        this.eagerFetch = eagerFetch;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -173,7 +184,8 @@ public class ReservationCriteria implements Serializable, Criteria {
             Objects.equals(status, that.status) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(facilitiesId, that.facilitiesId) &&
-            Objects.equals(equipmentReservationsId, that.equipmentReservationsId);
+            Objects.equals(equipmentReservationsId, that.equipmentReservationsId) &&
+            Objects.equals(eagerFetch, that.eagerFetch);
     }
 
     @Override
@@ -187,7 +199,8 @@ public class ReservationCriteria implements Serializable, Criteria {
         status,
         userId,
         facilitiesId,
-        equipmentReservationsId
+        equipmentReservationsId,
+        eagerFetch
         );
     }
 
@@ -203,6 +216,7 @@ public class ReservationCriteria implements Serializable, Criteria {
                 (userId != null ? "userId=" + userId + ", " : "") +
                 (facilitiesId != null ? "facilitiesId=" + facilitiesId + ", " : "") +
                 (equipmentReservationsId != null ? "equipmentReservationsId=" + equipmentReservationsId + ", " : "") +
+                (eagerFetch != null ? "eagerFetch=" + eagerFetch + ", " : "") +
             "}";
     }
 
