@@ -1,15 +1,28 @@
 package edu.oakland.domain;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A EquipmentBundle.
@@ -35,6 +48,11 @@ public class EquipmentBundle implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties("equipmentBundle")
     private Set<EquipmentBundleClaim> claims = new HashSet<>();
+
+    @ManyToMany(mappedBy = "equipmentBundles")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Facility> facilities = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -81,6 +99,31 @@ public class EquipmentBundle implements Serializable {
 
     public void setClaims(Set<EquipmentBundleClaim> equipmentBundleClaims) {
         this.claims = equipmentBundleClaims;
+    }
+
+    public Set<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public EquipmentBundle facilities(Set<Facility> facilities) {
+        this.facilities = facilities;
+        return this;
+    }
+
+    public EquipmentBundle addFacilities(Facility facility) {
+        this.facilities.add(facility);
+        facility.getEquipmentBundles().add(this);
+        return this;
+    }
+
+    public EquipmentBundle removeFacilities(Facility facility) {
+        this.facilities.remove(facility);
+        facility.getEquipmentBundles().remove(this);
+        return this;
+    }
+
+    public void setFacilities(Set<Facility> facilities) {
+        this.facilities = facilities;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

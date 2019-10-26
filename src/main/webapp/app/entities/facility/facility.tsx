@@ -58,6 +58,9 @@ export class Facility extends React.Component<IFacilityProps> {
                   <th>
                     <Translate contentKey="recCenterManagementApp.facility.description">Description</Translate>
                   </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.facility.equipmentBundles">Equipment Bundles</Translate>
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -76,6 +79,16 @@ export class Facility extends React.Component<IFacilityProps> {
                     <td>{facility.foodAllowed ? 'true' : 'false'}</td>
                     <td>{facility.colorCode}</td>
                     <td>{facility.description}</td>
+                    <td>
+                      {facility.equipmentBundles
+                        ? facility.equipmentBundles.map((val, j) => (
+                            <span key={j}>
+                              <Link to={`equipment-bundle/${val.id}`}>{val.name}</Link>
+                              {j === facility.equipmentBundles.length - 1 ? '' : ', '}
+                            </span>
+                          ))
+                        : null}
+                    </td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${facility.id}`} color="info" size="sm">

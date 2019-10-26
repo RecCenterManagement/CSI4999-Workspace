@@ -7,6 +7,13 @@
             "otherEntityName": "equipmentBundleClaim",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "equipmentBundle"
+        },
+        {
+            "relationshipName": "facilities",
+            "otherEntityName": "facility",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "equipmentBundles"
         }
     ],
     "fields": [

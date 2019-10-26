@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IFacility } from 'app/shared/model/facility.model';
+import { getEntities as getFacilities } from 'app/entities/facility/facility.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './equipment-bundle.reducer';
 import { IEquipmentBundle } from 'app/shared/model/equipment-bundle.model';
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
@@ -16,12 +18,14 @@ export interface IEquipmentBundleUpdateProps extends StateProps, DispatchProps, 
 
 export interface IEquipmentBundleUpdateState {
   isNew: boolean;
+  facilitiesId: string;
 }
 
 export class EquipmentBundleUpdate extends React.Component<IEquipmentBundleUpdateProps, IEquipmentBundleUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      facilitiesId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -38,6 +42,8 @@ export class EquipmentBundleUpdate extends React.Component<IEquipmentBundleUpdat
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getFacilities();
   }
 
   saveEntity = (event, errors, values) => {
@@ -61,7 +67,7 @@ export class EquipmentBundleUpdate extends React.Component<IEquipmentBundleUpdat
   };
 
   render() {
-    const { equipmentBundleEntity, loading, updating } = this.props;
+    const { equipmentBundleEntity, facilities, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -126,6 +132,7 @@ export class EquipmentBundleUpdate extends React.Component<IEquipmentBundleUpdat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  facilities: storeState.facility.entities,
   equipmentBundleEntity: storeState.equipmentBundle.entity,
   loading: storeState.equipmentBundle.loading,
   updating: storeState.equipmentBundle.updating,
@@ -133,6 +140,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getFacilities,
   getEntity,
   updateEntity,
   createEntity,

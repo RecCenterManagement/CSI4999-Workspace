@@ -68,6 +68,19 @@ export class FacilityDetail extends React.Component<IFacilityDetailProps> {
               </span>
             </dt>
             <dd>{facilityEntity.description}</dd>
+            <dt>
+              <Translate contentKey="recCenterManagementApp.facility.equipmentBundles">Equipment Bundles</Translate>
+            </dt>
+            <dd>
+              {facilityEntity.equipmentBundles
+                ? facilityEntity.equipmentBundles.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.name}</a>
+                      {i === facilityEntity.equipmentBundles.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/facility" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

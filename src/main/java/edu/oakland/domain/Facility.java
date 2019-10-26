@@ -58,6 +58,13 @@ public class Facility implements Serializable {
     @JsonIgnore
     private Set<Reservation> reservations = new HashSet<>();
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "facility_equipment_bundles",
+               joinColumns = @JoinColumn(name = "facility_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "equipment_bundles_id", referencedColumnName = "id"))
+    private Set<EquipmentBundle> equipmentBundles = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -181,6 +188,31 @@ public class Facility implements Serializable {
 
     public void setReservations(Set<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public Set<EquipmentBundle> getEquipmentBundles() {
+        return equipmentBundles;
+    }
+
+    public Facility equipmentBundles(Set<EquipmentBundle> equipmentBundles) {
+        this.equipmentBundles = equipmentBundles;
+        return this;
+    }
+
+    public Facility addEquipmentBundles(EquipmentBundle equipmentBundle) {
+        this.equipmentBundles.add(equipmentBundle);
+        equipmentBundle.getFacilities().add(this);
+        return this;
+    }
+
+    public Facility removeEquipmentBundles(EquipmentBundle equipmentBundle) {
+        this.equipmentBundles.remove(equipmentBundle);
+        equipmentBundle.getFacilities().remove(this);
+        return this;
+    }
+
+    public void setEquipmentBundles(Set<EquipmentBundle> equipmentBundles) {
+        this.equipmentBundles = equipmentBundles;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

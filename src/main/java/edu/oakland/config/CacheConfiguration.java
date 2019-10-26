@@ -54,6 +54,8 @@ public class CacheConfiguration {
             createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName());
             createCache(cm, edu.oakland.domain.EquipmentBundleClaim.class.getName());
             createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName() + ".claims");
+            createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName() + ".facilities");
+            createCache(cm, edu.oakland.domain.Facility.class.getName() + ".equipmentBundles");
             // jhipster-needle-ehcache-add-entry
         };
     }

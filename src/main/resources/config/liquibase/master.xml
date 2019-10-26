@@ -26,5 +26,6 @@
     <include file="config/liquibase/changelog/20190924230652_added_entity_constraints_Reservation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191008154324_added_entity_constraints_EquipmentReservation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191024231128_added_entity_constraints_EquipmentBundleClaim.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190924230651_added_entity_constraints_Facility.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
