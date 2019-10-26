@@ -35,6 +35,7 @@ public class ReservationService {
      */
     public Reservation save(Reservation reservation) {
         log.debug("Request to save Reservation : {}", reservation);
+        reservation.getEquipmentReservations().forEach(equipmentReservation -> equipmentReservation.setReservation(reservation));
         return reservationRepository.save(reservation);
     }
 
