@@ -12,12 +12,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.github.jhipster.service.QueryService;
-
+// for static metamodels
+import edu.oakland.domain.EquipmentReservation_;
+import edu.oakland.domain.Facility_;
 import edu.oakland.domain.Reservation;
-import edu.oakland.domain.*; // for static metamodels
+import edu.oakland.domain.Reservation_;
+import edu.oakland.domain.User_;
 import edu.oakland.repository.ReservationRepository;
 import edu.oakland.service.dto.ReservationCriteria;
+import io.github.jhipster.service.QueryService;
 
 /**
  * Service for executing complex queries for {@link Reservation} entities in the database.
@@ -111,6 +114,13 @@ public class ReservationQueryService extends QueryService<Reservation> {
             if (criteria.getEquipmentReservationsId() != null) {
                 specification = specification.and(buildSpecification(criteria.getEquipmentReservationsId(),
                     root -> root.join(Reservation_.equipmentReservations, JoinType.LEFT).get(EquipmentReservation_.id)));
+            }
+            if (criteria.getEagerFetch() != null && criteria.getEagerFetch()) {
+                specification = specification.and((root, query, builder) -> {
+                    root.fetch("facilities", JoinType.LEFT);
+                    root.fetch("equipmentReservations", JoinType.LEFT);
+                    return query.getRestriction();
+                });
             }
         }
         return specification;
