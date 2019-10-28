@@ -51,6 +51,17 @@
 
     <changeSet id="20190924230651-1-relations" author="jhipster">
 
+        <createTable tableName="facility_equipment_bundles">
+            <column name="equipment_bundles_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="facility_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="facility_id, equipment_bundles_id" tableName="facility_equipment_bundles"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

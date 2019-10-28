@@ -9,6 +9,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IReservation } from 'app/shared/model/reservation.model';
 import { getEntities as getReservations } from 'app/entities/reservation/reservation.reducer';
+import { IEquipmentBundle } from 'app/shared/model/equipment-bundle.model';
+import { getEntities as getEquipmentBundles } from 'app/entities/equipment-bundle/equipment-bundle.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
@@ -18,6 +20,7 @@ export interface IFacilityUpdateProps extends StateProps, DispatchProps, RouteCo
 
 export interface IFacilityUpdateState {
   isNew: boolean;
+  idsequipmentBundles: any[];
   reservationsId: string;
 }
 
@@ -25,6 +28,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
   constructor(props) {
     super(props);
     this.state = {
+      idsequipmentBundles: [],
       reservationsId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -44,6 +48,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
     }
 
     this.props.getReservations();
+    this.props.getEquipmentBundles();
   }
 
   saveEntity = (event, errors, values) => {
@@ -51,7 +56,8 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
       const { facilityEntity } = this.props;
       const entity = {
         ...facilityEntity,
-        ...values
+        ...values,
+        equipmentBundles: mapIdList(values.equipmentBundles)
       };
 
       if (this.state.isNew) {
@@ -67,7 +73,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
   };
 
   render() {
-    const { facilityEntity, reservations, loading, updating } = this.props;
+    const { facilityEntity, reservations, equipmentBundles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -175,6 +181,28 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="facility-equipmentBundles">
+                    <Translate contentKey="recCenterManagementApp.facility.equipmentBundles">Equipment Bundles</Translate>
+                  </Label>
+                  <AvInput
+                    id="facility-equipmentBundles"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="equipmentBundles"
+                    value={facilityEntity.equipmentBundles && facilityEntity.equipmentBundles.map(e => e.id)}
+                  >
+                    <option value="" key="0" />
+                    {equipmentBundles
+                      ? equipmentBundles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.name}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;
@@ -199,6 +227,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
 
 const mapStateToProps = (storeState: IRootState) => ({
   reservations: storeState.reservation.entities,
+  equipmentBundles: storeState.equipmentBundle.entities,
   facilityEntity: storeState.facility.entity,
   loading: storeState.facility.loading,
   updating: storeState.facility.updating,
@@ -207,6 +236,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getReservations,
+  getEquipmentBundles,
   getEntity,
   updateEntity,
   createEntity,

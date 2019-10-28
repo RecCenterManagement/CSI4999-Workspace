@@ -82,11 +82,11 @@ public class FacilityResource {
     /**
      * {@code GET  /facilities} : get all the facilities.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of facilities in body.
      */
     @GetMapping("/facilities")
-    public List<Facility> getAllFacilities() {
+    public List<Facility> getAllFacilities(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Facilities");
         return facilityService.findAll();
     }

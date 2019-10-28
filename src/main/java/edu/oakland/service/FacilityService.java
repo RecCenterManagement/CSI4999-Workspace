@@ -5,6 +5,8 @@ import edu.oakland.repository.FacilityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,9 +47,18 @@ public class FacilityService {
     @Transactional(readOnly = true)
     public List<Facility> findAll() {
         log.debug("Request to get all Facilities");
-        return facilityRepository.findAll();
+        return facilityRepository.findAllWithEagerRelationships();
     }
 
+    /**
+     * Get all the facilities with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<Facility> findAllWithEagerRelationships(Pageable pageable) {
+        return facilityRepository.findAllWithEagerRelationships(pageable);
+    }
+    
 
     /**
      * Get one facility by id.
@@ -58,7 +69,7 @@ public class FacilityService {
     @Transactional(readOnly = true)
     public Optional<Facility> findOne(Long id) {
         log.debug("Request to get Facility : {}", id);
-        return facilityRepository.findById(id);
+        return facilityRepository.findOneWithEagerRelationships(id);
     }
 
     /**

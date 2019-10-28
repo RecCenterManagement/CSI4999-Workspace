@@ -17,7 +17,8 @@
         "title": "Equipment Bundle"
       },
       "name": "Name",
-      "claims": "Claims"
+      "claims": "Claims",
+      "facilities": "Facilities"
     }
   }
 }

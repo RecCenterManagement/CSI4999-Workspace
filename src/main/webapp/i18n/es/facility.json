@@ -23,7 +23,8 @@
       "foodAllowed": "Food Allowed",
       "colorCode": "Color Code",
       "description": "Description",
-      "reservations": "Reservations"
+      "reservations": "Reservations",
+      "equipmentBundles": "Equipment Bundles"
     }
   }
 }

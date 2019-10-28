@@ -9,6 +9,14 @@
             "relationshipName": "reservations",
             "otherEntityField": "id",
             "ownerSide": false
+        },
+        {
+            "relationshipName": "equipmentBundles",
+            "otherEntityName": "equipmentBundle",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "facilities"
         }
     ],
     "fields": [
