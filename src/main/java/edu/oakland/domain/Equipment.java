@@ -27,6 +27,11 @@ public class Equipment implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "inventory_size", nullable = false)
+    private Integer inventorySize;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -47,6 +52,19 @@ public class Equipment implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getInventorySize() {
+        return inventorySize;
+    }
+
+    public Equipment inventorySize(Integer inventorySize) {
+        this.inventorySize = inventorySize;
+        return this;
+    }
+
+    public void setInventorySize(Integer inventorySize) {
+        this.inventorySize = inventorySize;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -71,6 +89,7 @@ public class Equipment implements Serializable {
         return "Equipment{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", inventorySize=" + getInventorySize() +
             "}";
     }
 }

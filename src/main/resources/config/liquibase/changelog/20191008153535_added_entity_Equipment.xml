@@ -20,6 +20,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="inventory_size" type="integer">
+                <constraints nullable="false" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
@@ -45,6 +49,7 @@
                   tableName="equipment">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
+            <column name="inventory_size" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

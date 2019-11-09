@@ -40,6 +40,9 @@ export class Equipment extends React.Component<IEquipmentProps> {
                   <th>
                     <Translate contentKey="recCenterManagementApp.equipment.name">Name</Translate>
                   </th>
+                  <th>
+                    <Translate contentKey="recCenterManagementApp.equipment.inventorySize">Inventory Size</Translate>
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -52,6 +55,7 @@ export class Equipment extends React.Component<IEquipmentProps> {
                       </Button>
                     </td>
                     <td>{equipment.name}</td>
+                    <td>{equipment.inventorySize}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${equipment.id}`} color="info" size="sm">

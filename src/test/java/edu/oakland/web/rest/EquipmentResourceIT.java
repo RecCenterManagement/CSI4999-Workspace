@@ -36,6 +36,10 @@ public class EquipmentResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_INVENTORY_SIZE = 0;
+    private static final Integer UPDATED_INVENTORY_SIZE = 1;
+    private static final Integer SMALLER_INVENTORY_SIZE = 0 - 1;
+
     @Autowired
     private EquipmentRepository equipmentRepository;
 
@@ -78,7 +82,8 @@ public class EquipmentResourceIT {
      */
     public static Equipment createEntity(EntityManager em) {
         Equipment equipment = new Equipment()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .inventorySize(DEFAULT_INVENTORY_SIZE);
         return equipment;
     }
     /**
@@ -89,7 +94,8 @@ public class EquipmentResourceIT {
      */
     public static Equipment createUpdatedEntity(EntityManager em) {
         Equipment equipment = new Equipment()
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .inventorySize(UPDATED_INVENTORY_SIZE);
         return equipment;
     }
 
@@ -114,6 +120,7 @@ public class EquipmentResourceIT {
         assertThat(equipmentList).hasSize(databaseSizeBeforeCreate + 1);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
         assertThat(testEquipment.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testEquipment.getInventorySize()).isEqualTo(DEFAULT_INVENTORY_SIZE);
     }
 
     @Test
@@ -156,6 +163,24 @@ public class EquipmentResourceIT {
 
     @Test
     @Transactional
+    public void checkInventorySizeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = equipmentRepository.findAll().size();
+        // set the field null
+        equipment.setInventorySize(null);
+
+        // Create the Equipment, which fails.
+
+        restEquipmentMockMvc.perform(post("/api/equipment")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(equipment)))
+            .andExpect(status().isBadRequest());
+
+        List<Equipment> equipmentList = equipmentRepository.findAll();
+        assertThat(equipmentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllEquipment() throws Exception {
         // Initialize the database
         equipmentRepository.saveAndFlush(equipment);
@@ -165,7 +190,8 @@ public class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(equipment.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].inventorySize").value(hasItem(DEFAULT_INVENTORY_SIZE)));
     }
     
     @Test
@@ -179,7 +205,8 @@ public class EquipmentResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(equipment.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.inventorySize").value(DEFAULT_INVENTORY_SIZE));
     }
 
     @Test
@@ -203,7 +230,8 @@ public class EquipmentResourceIT {
         // Disconnect from session so that the updates on updatedEquipment are not directly saved in db
         em.detach(updatedEquipment);
         updatedEquipment
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .inventorySize(UPDATED_INVENTORY_SIZE);
 
         restEquipmentMockMvc.perform(put("/api/equipment")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -215,6 +243,7 @@ public class EquipmentResourceIT {
         assertThat(equipmentList).hasSize(databaseSizeBeforeUpdate);
         Equipment testEquipment = equipmentList.get(equipmentList.size() - 1);
         assertThat(testEquipment.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testEquipment.getInventorySize()).isEqualTo(UPDATED_INVENTORY_SIZE);
     }
 
     @Test

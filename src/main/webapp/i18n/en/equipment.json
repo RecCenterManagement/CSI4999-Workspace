@@ -16,7 +16,8 @@
       "detail": {
         "title": "Equipment"
       },
-      "name": "Name"
+      "name": "Name",
+      "inventorySize": "Inventory Size"
     }
   }
 }
