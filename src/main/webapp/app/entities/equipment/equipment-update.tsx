@@ -101,6 +101,22 @@ export class EquipmentUpdate extends React.Component<IEquipmentUpdateProps, IEqu
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label id="inventorySizeLabel" for="equipment-inventorySize">
+                    <Translate contentKey="recCenterManagementApp.equipment.inventorySize">Inventory Size</Translate>
+                  </Label>
+                  <AvField
+                    id="equipment-inventorySize"
+                    type="string"
+                    className="form-control"
+                    name="inventorySize"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') },
+                      min: { value: 0, errorMessage: translate('entity.validation.min', { min: 0 }) },
+                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                    }}
+                  />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/equipment" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;

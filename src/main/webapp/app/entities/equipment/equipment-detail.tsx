@@ -32,6 +32,12 @@ export class EquipmentDetail extends React.Component<IEquipmentDetailProps> {
               </span>
             </dt>
             <dd>{equipmentEntity.name}</dd>
+            <dt>
+              <span id="inventorySize">
+                <Translate contentKey="recCenterManagementApp.equipment.inventorySize">Inventory Size</Translate>
+              </span>
+            </dt>
+            <dd>{equipmentEntity.inventorySize}</dd>
           </dl>
           <Button tag={Link} to="/entity/equipment" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
