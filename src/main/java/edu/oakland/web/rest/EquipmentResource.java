@@ -2,6 +2,8 @@ package edu.oakland.web.rest;
 
 import edu.oakland.domain.Equipment;
 import edu.oakland.repository.EquipmentRepository;
+import edu.oakland.service.EquipmentInventoryService;
+import edu.oakland.service.dto.AvailableInventoryDTO;
 import edu.oakland.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -9,13 +11,16 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +40,11 @@ public class EquipmentResource {
 
     private final EquipmentRepository equipmentRepository;
 
-    public EquipmentResource(EquipmentRepository equipmentRepository) {
+    private final EquipmentInventoryService inventoryService;
+
+    public EquipmentResource(EquipmentRepository equipmentRepository, EquipmentInventoryService inventoryService) {
         this.equipmentRepository = equipmentRepository;
+        this.inventoryService = inventoryService;
     }
 
     /**
@@ -102,6 +110,18 @@ public class EquipmentResource {
         log.debug("REST request to get Equipment : {}", id);
         Optional<Equipment> equipment = equipmentRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(equipment);
+    }
+
+    @GetMapping("/equipment/inventory")
+    public ResponseEntity<AvailableInventoryDTO> getEquipmentInventory(
+            @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) ZonedDateTime startTime,
+            @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) ZonedDateTime endTime) {
+        if (!endTime.isAfter(startTime)) {
+            throw new BadRequestAlertException("End time cannot preceed start time", "AvailableInventoryDTO",
+                    "badtimecriteria");
+        }
+        AvailableInventoryDTO availableInventory = inventoryService.getAvailableInventory(startTime, endTime);
+        return ResponseEntity.ok(availableInventory);
     }
 
     /**
