@@ -117,7 +117,7 @@ public class EquipmentResource {
             @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) ZonedDateTime startTime,
             @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) ZonedDateTime endTime) {
         if (!endTime.isAfter(startTime)) {
-            throw new BadRequestAlertException("End time cannot preceed start time", "AvailableInventoryDTO",
+            throw new BadRequestAlertException("End time cannot precede start time", "AvailableInventoryDTO",
                     "badtimecriteria");
         }
         AvailableInventoryDTO availableInventory = inventoryService.getAvailableInventory(startTime, endTime);
