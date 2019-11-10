@@ -1,7 +1,10 @@
 package edu.oakland.web.rest;
 
 import edu.oakland.domain.Reservation;
+import edu.oakland.domain.enumeration.ReservationStatus;
+import edu.oakland.security.AuthoritiesConstants;
 import edu.oakland.service.ReservationService;
+import edu.oakland.service.UserService;
 import edu.oakland.web.rest.errors.BadRequestAlertException;
 import edu.oakland.service.dto.ReservationCriteria;
 import edu.oakland.service.ReservationQueryService;
@@ -45,9 +48,13 @@ public class ReservationResource {
 
     private final ReservationQueryService reservationQueryService;
 
-    public ReservationResource(ReservationService reservationService, ReservationQueryService reservationQueryService) {
+    private final UserService userService;
+
+    public ReservationResource(ReservationService reservationService, ReservationQueryService reservationQueryService,
+            UserService userService) {
         this.reservationService = reservationService;
         this.reservationQueryService = reservationQueryService;
+        this.userService = userService;
     }
 
     /**
@@ -62,6 +69,17 @@ public class ReservationResource {
         log.debug("REST request to save Reservation : {}", reservation);
         if (reservation.getId() != null) {
             throw new BadRequestAlertException("A new reservation cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        if (reservation.getStatus() != ReservationStatus.PENDING) {
+            userService.getUserWithAuthorities().ifPresent(user -> {
+                boolean match = user.getAuthorities().stream()
+                        .anyMatch(auth -> auth.getName().equals(AuthoritiesConstants.ADMIN));
+                if (!match)
+                    throw new BadRequestAlertException(
+                            "User '" + user.getLogin() + "' does not have authority to create " + ENTITY_NAME
+                                    + " with status " + reservation.getStatus(),
+                            ENTITY_NAME, "createnotauthorized");
+            });
         }
         Reservation result = reservationService.save(reservation);
         return ResponseEntity.created(new URI("/api/reservations/" + result.getId()))
@@ -83,6 +101,17 @@ public class ReservationResource {
         log.debug("REST request to update Reservation : {}", reservation);
         if (reservation.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (reservation.getStatus() != ReservationStatus.PENDING) {
+            userService.getUserWithAuthorities().ifPresent(user -> {
+                boolean match = user.getAuthorities().stream()
+                        .anyMatch(auth -> auth.getName().equals(AuthoritiesConstants.ADMIN));
+                if (!match)
+                    throw new BadRequestAlertException(
+                            "User '" + user.getLogin() + "' does not have authority to update " + ENTITY_NAME
+                                    + " with ID " + reservation.getId() + " with status " + reservation.getStatus(),
+                            ENTITY_NAME, "updatenotauthorized");
+            });
         }
         Reservation result = reservationService.save(reservation);
         return ResponseEntity.ok()
