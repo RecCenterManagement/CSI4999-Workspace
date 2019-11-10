@@ -44,6 +44,7 @@ public class EquipmentInventoryService {
                 .findAll(createReservationSepecification(startTime, endTime));
         reservations.sort((r1, r2) -> r1.getStartTime().compareTo(r2.getStartTime())); // order reservations
                                                                                        // chronologically by start time
+                                                                                       
         // as we iterate over reservations to tally the equipment totals, use this set
         // to track which reservations overlap chronologically
         Set<Reservation> occurringReservations = new HashSet<Reservation>();
@@ -54,7 +55,6 @@ public class EquipmentInventoryService {
         // keep track of the peak number of equipment used at a particular time
         Map<Equipment, Integer> peakUsage = new HashMap<Equipment, Integer>();
         reservations.forEach(reservation -> {
-
             // once a reservation is no longer occurring remove it from the set and remove
             // its contribution to the current usage counts
             occurringReservations.removeIf(occurringRes -> {
