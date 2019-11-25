@@ -1,0 +1,10 @@
+{
+  "recCenterManagementApp": {
+    "MembershipType": {
+      "null": "",
+      "STUDENT": "STUDENT",
+      "EMPLOYEE": "EMPLOYEE",
+      "COMMUNITY": "COMMUNITY"
+    }
+  }
+}
