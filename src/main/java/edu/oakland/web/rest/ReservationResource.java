@@ -3,12 +3,12 @@ package edu.oakland.web.rest;
 import edu.oakland.domain.Reservation;
 import edu.oakland.domain.enumeration.ReservationStatus;
 import edu.oakland.security.AuthoritiesConstants;
+import edu.oakland.security.SecurityUtils;
 import edu.oakland.service.ReservationService;
 import edu.oakland.service.UserService;
 import edu.oakland.web.rest.errors.BadRequestAlertException;
 import edu.oakland.service.dto.ReservationCriteria;
 import edu.oakland.service.ReservationQueryService;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,87 +60,93 @@ public class ReservationResource {
      * {@code POST  /reservations} : Create a new reservation.
      *
      * @param reservation the reservation to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new reservation, or with status {@code 400 (Bad Request)} if the reservation has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new reservation, or with status {@code 400 (Bad Request)} if
+     *         the reservation has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/reservations")
-    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody Reservation reservation) throws URISyntaxException {
+    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody Reservation reservation)
+            throws URISyntaxException {
         log.debug("REST request to save Reservation : {}", reservation);
         if (reservation.getId() != null) {
             throw new BadRequestAlertException("A new reservation cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (reservation.getStatus() != ReservationStatus.PENDING) {
-            userService.getUserWithAuthorities().ifPresent(user -> {
-                boolean match = user.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getName().equals(AuthoritiesConstants.ADMIN));
-                if (!match)
-                    throw new BadRequestAlertException(
-                            "User '" + user.getLogin() + "' does not have authority to create " + ENTITY_NAME
-                                    + " with status " + reservation.getStatus(),
-                            ENTITY_NAME, "createnotauthorized");
-            });
+        if (reservation.getStatus() != ReservationStatus.PENDING
+                && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            String login = SecurityUtils.getCurrentUserLogin().get();
+            throw new BadRequestAlertException("User '" + login + "' does not have authority to create " + ENTITY_NAME
+                    + " with status " + reservation.getStatus(), ENTITY_NAME, "createnotauthorized");
         }
         Reservation result = reservationService.save(reservation);
-        return ResponseEntity.created(new URI("/api/reservations/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity
+                .created(new URI("/api/reservations/" + result.getId())).headers(HeaderUtil
+                        .createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code PUT  /reservations} : Updates an existing reservation.
      *
      * @param reservation the reservation to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated reservation,
-     * or with status {@code 400 (Bad Request)} if the reservation is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the reservation couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated reservation, or with status {@code 400 (Bad Request)} if
+     *         the reservation is not valid, or with status
+     *         {@code 500 (Internal Server Error)} if the reservation couldn't be
+     *         updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/reservations")
-    public ResponseEntity<Reservation> updateReservation(@Valid @RequestBody Reservation reservation) throws URISyntaxException {
+    public ResponseEntity<Reservation> updateReservation(@Valid @RequestBody Reservation reservation)
+            throws URISyntaxException {
         log.debug("REST request to update Reservation : {}", reservation);
         if (reservation.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (reservation.getStatus() != ReservationStatus.PENDING) {
-            userService.getUserWithAuthorities().ifPresent(user -> {
-                boolean match = user.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getName().equals(AuthoritiesConstants.ADMIN));
-                if (!match)
-                    throw new BadRequestAlertException(
-                            "User '" + user.getLogin() + "' does not have authority to update " + ENTITY_NAME
-                                    + " with ID " + reservation.getId() + " with status " + reservation.getStatus(),
-                            ENTITY_NAME, "updatenotauthorized");
-            });
+        if (!reservationService.currentUserCanEdit(reservation)) {
+            throw new BadRequestAlertException("The current user does not have permission to edit this object.",
+                    ENTITY_NAME, "permissiondenied");
+        }
+        if (reservation.getStatus() != ReservationStatus.PENDING
+                && !SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            String login = SecurityUtils.getCurrentUserLogin().get();
+            throw new BadRequestAlertException(
+                    "User '" + login + "' does not have authority to update " + ENTITY_NAME + " with ID "
+                            + reservation.getId() + " with status " + reservation.getStatus(),
+                    ENTITY_NAME, "updatenotauthorized");
         }
         Reservation result = reservationService.save(reservation);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, reservation.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(
+                HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, reservation.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code GET  /reservations} : get all the reservations.
      *
-
+     * 
      * @param pageable the pagination information.
-
+     * 
      * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reservations in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of reservations in body.
      */
     @GetMapping("/reservations")
     public ResponseEntity<List<Reservation>> getAllReservations(ReservationCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Reservations by criteria: {}", criteria);
         Page<Reservation> page = reservationQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil
+                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
-    * {@code GET  /reservations/count} : count all the reservations.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /reservations/count} : count all the reservations.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count
+     *         in body.
+     */
     @GetMapping("/reservations/count")
     public ResponseEntity<Long> countReservations(ReservationCriteria criteria) {
         log.debug("REST request to count Reservations by criteria: {}", criteria);
@@ -152,7 +157,8 @@ public class ReservationResource {
      * {@code GET  /reservations/:id} : get the "id" reservation.
      *
      * @param id the id of the reservation to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the reservation, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the reservation, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/reservations/{id}")
     public ResponseEntity<Reservation> getReservation(@PathVariable Long id) {
@@ -170,7 +176,15 @@ public class ReservationResource {
     @DeleteMapping("/reservations/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         log.debug("REST request to delete Reservation : {}", id);
+        if (!reservationService.currentUserCanEdit(id)) {
+            String login = SecurityUtils.getCurrentUserLogin().get();
+            throw new BadRequestAlertException(
+                    "User '" + login + "' does not have authority to delete " + ENTITY_NAME + " with ID " + id,
+                    ENTITY_NAME, "updatenotauthorized");
+        }
         reservationService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+                .build();
     }
 }
