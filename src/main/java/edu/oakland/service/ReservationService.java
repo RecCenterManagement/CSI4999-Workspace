@@ -1,7 +1,11 @@
 package edu.oakland.service;
 
 import edu.oakland.domain.Reservation;
+import edu.oakland.domain.User;
 import edu.oakland.repository.ReservationRepository;
+import edu.oakland.security.AuthoritiesConstants;
+import edu.oakland.security.SecurityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +27,11 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    private final UserService userService;
+
+    public ReservationService(ReservationRepository reservationRepository, UserService userService) {
         this.reservationRepository = reservationRepository;
+        this.userService = userService;
     }
 
     /**
@@ -35,7 +42,8 @@ public class ReservationService {
      */
     public Reservation save(Reservation reservation) {
         log.debug("Request to save Reservation : {}", reservation);
-        reservation.getEquipmentReservations().forEach(equipmentReservation -> equipmentReservation.setReservation(reservation));
+        reservation.getEquipmentReservations()
+                .forEach(equipmentReservation -> equipmentReservation.setReservation(reservation));
         return reservationRepository.save(reservation);
     }
 
@@ -59,7 +67,6 @@ public class ReservationService {
     public Page<Reservation> findAllWithEagerRelationships(Pageable pageable) {
         return reservationRepository.findAllWithEagerRelationships(pageable);
     }
-    
 
     /**
      * Get one reservation by id.
@@ -81,5 +88,57 @@ public class ReservationService {
     public void delete(Long id) {
         log.debug("Request to delete Reservation : {}", id);
         reservationRepository.deleteById(id);
+    }
+
+    /**
+     * Check if the currently authenticated user is the owner of the given
+     * reservation
+     * 
+     * @param reservation the reservation to check ownership of
+     */
+    @Transactional(readOnly = true)
+    public boolean currentUserIsOwner(Reservation reservation) {
+        log.debug("Check if current user is the owner of reservation {}", reservation);
+        Optional<User> currentUserOption = userService.getUserWithAuthorities();
+        if (!currentUserOption.isPresent()) {
+            return false;
+        }
+        final Long id = reservation.getId();
+        if (id == null) {
+            return true;
+        }
+        Optional<Reservation> dbReservationOption = reservationRepository.findById(id);
+        if (!dbReservationOption.isPresent()) {
+            return true;
+        }
+        User currentUser = currentUserOption.get();
+        User dbUser = dbReservationOption.get().getUser();
+        return currentUser.equals(dbUser);
+    }
+
+    /**
+     * Check if the currently authenticated user has authority to edit or delete the
+     * given Reservation
+     * 
+     * @param reservation the given reservation
+     */
+    public boolean currentUserCanEdit(Reservation reservation) {
+        log.debug("Check if current user can edit reservation {}", reservation);
+        return SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) || currentUserIsOwner(reservation);
+    }
+
+    /**
+     * Check if the currently authenticated user has authority to edit or delete the
+     * reservation with the given id
+     * 
+     * @param id the ID of the reservation to check
+     */
+    public boolean currentUserCanEdit(Long id) {
+        log.debug("Check if current user can edit reservation with ID {}", id);
+        Optional<Reservation> reservationOption = reservationRepository.findById(id);
+        if (!reservationOption.isPresent()) {
+            return true;
+        }
+        return currentUserCanEdit(reservationOption.get());
     }
 }
