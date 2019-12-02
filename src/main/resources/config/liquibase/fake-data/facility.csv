@@ -1,8 +1,9 @@
 id;name;footage;capacity;av_support;food_allowed;color_code;description
-1;Rec Gym Court 1;20000;50;false;Food;#333333;This is a room
-2;Rec Gym Court 2;3000;50;false;Food;#333333;This is a room
-3;Rec Gym Court 3;1858;50;false;Food;#333333;This is a room
-4;Activity Center;18595;100;false;Food;#333333;This is a room
-5;Studio 919;89585;25;45;Food;#333333;This is a room
-6;Racquetball Court;58489;10;false;Food;#333333;This is a room
-7;David E. Herman Room;4858;8;false;Food;#333333;This is a room
+1;Rec Gym Court 1;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
+2;Rec Gym Court 2;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
+3;Rec Gym Court 3;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
+4;Activity Center;3840;100;false;false;#333333;A great place to play basketball with friends
+5;Studio 919;2840;75;false;false;#333333;Primarily used for group exercise
+6;Racquetball Court 1;1000;4;false;false;#333333;Great for racquetball, walleyball, or any similar game
+7;Racquetball Court 2;1000;4;false;false;#333333;Great for racquetball, walleyball, or any similar game
+8;David E. Herman Room;759;30;true;true;#333333;This room is great for wellness-focussed meetings and conferences
