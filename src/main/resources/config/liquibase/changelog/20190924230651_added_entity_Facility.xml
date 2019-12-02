@@ -88,6 +88,14 @@
             <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
+        <loadData
+                  file="config/liquibase/fake-data/facility_equipment_bundles.csv"
+                  separator=";"
+                  tableName="facility_equipment_bundles">
+            <column name="equipment_bundles_id" type="numeric"/>
+            <column name="facility_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
+        </loadData>
     </changeSet>
 
 </databaseChangeLog>
