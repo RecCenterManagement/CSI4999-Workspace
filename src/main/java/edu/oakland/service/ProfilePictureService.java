@@ -7,7 +7,7 @@ import edu.oakland.repository.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +42,7 @@ public class ProfilePictureService {
      * @param profilePicture the entity to save.
      * @return the persisted entity.
      */
+    @CacheEvict(cacheNames = "usersByLogin", allEntries = true)
     public ProfilePicture save(ProfilePicture profilePicture) {
         log.debug("Request to save ProfilePicture : {}", profilePicture);
 
@@ -90,6 +91,7 @@ public class ProfilePictureService {
      *
      * @param id the id of the entity.
      */
+    @CacheEvict(cacheNames = "usersByLogin", allEntries = true)
     public void delete(Long id) {
         log.debug("Request to delete ProfilePicture : {}", id);
         User user = profilePictureRepository.findUserById(id);
