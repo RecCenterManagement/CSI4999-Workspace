@@ -52,7 +52,9 @@ public class ProfilePictureService {
             throw new IllegalArgumentException();
         }
         User user = userOption.get();
-        profilePictureRepository.deleteByUser(user);
+        if (profilePicture.getId() == null) {
+            profilePictureRepository.deleteByUser(user);
+        }
         profilePicture = profilePictureRepository.save(profilePicture);
         user.setImageUrl("/content/user-profile-picture/" + profilePicture.getId());
         user = userRepository.save(user);
