@@ -1,0 +1,30 @@
+{
+  "recCenterManagementApp": {
+    "facility": {
+      "home": {
+        "title": "Facilities",
+        "createLabel": "Crear nuevo Facility",
+        "createOrEditLabel": "Crear o editar Facility",
+        "notFound": "No Facilities found"
+      },
+      "created": "Un nuevo Facility ha sido creado con el identificador {{ param }}",
+      "updated": "Un Facility ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Facility ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Facility {{ id }}?"
+      },
+      "detail": {
+        "title": "Facility"
+      },
+      "name": "Name",
+      "footage": "Footage",
+      "capacity": "Capacity",
+      "avSupport": "Av Support",
+      "foodAllowed": "Food Allowed",
+      "colorCode": "Color Code",
+      "description": "Description",
+      "reservations": "Reservations",
+      "equipmentBundles": "Equipment Bundles"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "recCenterManagementApp": {
+    "reservation": {
+      "home": {
+        "title": "Reservations",
+        "createLabel": "Crear nuevo Reservation",
+        "createOrEditLabel": "Crear o editar Reservation",
+        "notFound": "No Reservations found"
+      },
+      "created": "Un nuevo Reservation ha sido creado con el identificador {{ param }}",
+      "updated": "Un Reservation ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Reservation ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Reservation {{ id }}?"
+      },
+      "detail": {
+        "title": "Reservation"
+      },
+      "event": "Event",
+      "estimatedParticipants": "Estimated Participants",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "status": "Status",
+      "user": "User",
+      "facilities": "Facilities",
+      "equipmentReservations": "Equipment Reservations"
+    }
+  }
+}

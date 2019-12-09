@@ -1,0 +1,10 @@
+{
+  "recCenterManagementApp": {
+    "ReservationStatus": {
+      "null": "",
+      "APPROVED": "APPROVED",
+      "DENIED": "DENIED",
+      "PENDING": "PENDING"
+    }
+  }
+}

@@ -43,6 +43,20 @@ public class CacheConfiguration {
             createCache(cm, edu.oakland.domain.User.class.getName());
             createCache(cm, edu.oakland.domain.Authority.class.getName());
             createCache(cm, edu.oakland.domain.User.class.getName() + ".authorities");
+            createCache(cm, edu.oakland.domain.ProfilePicture.class.getName());
+            createCache(cm, edu.oakland.domain.Facility.class.getName());
+            createCache(cm, edu.oakland.domain.Facility.class.getName() + ".reservations");
+            createCache(cm, edu.oakland.domain.Reservation.class.getName());
+            createCache(cm, edu.oakland.domain.Reservation.class.getName() + ".facilities");
+            createCache(cm, edu.oakland.domain.Equipment.class.getName());
+            createCache(cm, edu.oakland.domain.EquipmentReservation.class.getName());
+            createCache(cm, edu.oakland.domain.Reservation.class.getName() + ".equipmentReservations");
+            createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName());
+            createCache(cm, edu.oakland.domain.EquipmentBundleClaim.class.getName());
+            createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName() + ".claims");
+            createCache(cm, edu.oakland.domain.EquipmentBundle.class.getName() + ".facilities");
+            createCache(cm, edu.oakland.domain.Facility.class.getName() + ".equipmentBundles");
+            createCache(cm, edu.oakland.domain.Membership.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,12 +1,21 @@
 {
   "global": {
-    "title": "RecCenter",
+    "title": "Rec Center",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
+      "calendar": "Calendar",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "profilePicture": "Profile Picture",
+        "facility": "Facility",
+        "reservation": "Reservation",
+        "equipment": "Equipment",
+        "equipmentReservation": "Equipment Reservation",
+        "equipmentBundle": "Equipment Bundle",
+        "equipmentBundleClaim": "Equipment Bundle Claim",
+        "membership": "Membership",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
