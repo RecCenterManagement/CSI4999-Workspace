@@ -8,19 +8,14 @@ Developement Ribbon
 .ribbon {
   background-color: rgba(170, 0, 0, 0.5);
   left: -3.5em;
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
   overflow: hidden;
   position: absolute;
-  top: 30px;
+  top: 90vh;
   white-space: nowrap;
   width: 15em;
   z-index: 99999;
   pointer-events: none;
-  opacity: 0.75;
+  opacity: 0.55;
   a {
     color: #fff;
     display: block;
@@ -90,7 +85,7 @@ Navbar styles
     width: auto;
     display: inline-block;
     img {
-      height: 45px;
+      height: 35px;
     }
   }
 }
@@ -99,10 +94,7 @@ Navbar styles
   margin-left: 20px;
   font-size: 24px;
   color: $header-color;
-  &:hover {
-    color: $header-color-hover;
-    text-decoration: none;
-  }
+  margin-left: 20px;
 }
 
 .loading-bar {

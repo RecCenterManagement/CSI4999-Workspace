@@ -18,6 +18,12 @@ class LoginModal extends React.Component<ILoginModalProps> {
   render() {
     const { loginError } = this.props;
 
+    // Modal takes a component as an optional param
+    const closeButton = (
+      <Button tag={Link} to="/" onClick={() => handleClose}>
+        &times;
+      </Button>
+    );
     return (
       <div id="login-page">
         <AvForm onSubmit={this.handleSubmit}>

@@ -5,7 +5,7 @@ import { locales, languages } from 'app/config/translation';
 
 export const LocaleMenu = ({ currentLocale, onClick }) =>
   Object.keys(languages).length > 1 && (
-    <NavDropdown icon="flag" name={currentLocale ? languages[currentLocale].name : undefined}>
+    <NavDropdown icon="flag">
       {locales.map(locale => (
         <DropdownItem key={locale} value={locale} onClick={onClick}>
           {languages[locale].name}
