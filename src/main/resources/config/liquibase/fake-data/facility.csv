@@ -1,9 +1,9 @@
 id;name;footage;capacity;av_support;food_allowed;color_code;description
-1;Rec Gym Court 1;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
-2;Rec Gym Court 2;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
-3;Rec Gym Court 3;6586;200;false;false;#333333;A perfect place to enjoy basketball, volleyball, or badminton
-4;Activity Center;3840;100;false;false;#333333;A great place to play basketball with friends
-5;Studio 919;2840;75;false;false;#333333;Primarily used for group exercise
-6;Racquetball Court 1;1000;4;false;false;#333333;Great for racquetball, walleyball, or any similar game
-7;Racquetball Court 2;1000;4;false;false;#333333;Great for racquetball, walleyball, or any similar game
-8;David E. Herman Room;759;30;true;true;#333333;This room is great for wellness-focussed meetings and conferences
+1;Rec Gym Court 1;6586;200;false;false;#993333;A perfect place to enjoy basketball, volleyball, or badminton
+2;Rec Gym Court 2;6586;200;false;false;#339933;A perfect place to enjoy basketball, volleyball, or badminton
+3;Rec Gym Court 3;6586;200;false;false;#333399;A perfect place to enjoy basketball, volleyball, or badminton
+4;Activity Center;3840;100;false;false;#FF6633;A great place to play basketball with friends
+5;Studio 919;2840;75;false;false;#DDDD33;Primarily used for group exercise
+6;Racquetball Court 1;1000;4;false;false;#993399;Great for racquetball, walleyball, or any similar game
+7;Racquetball Court 2;1000;4;false;false;#339999;Great for racquetball, walleyball, or any similar game
+8;David E. Herman Room;759;30;true;true;#DD00DD;This room is great for wellness-focussed meetings and conferences
